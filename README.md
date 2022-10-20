@@ -52,3 +52,4 @@
 ### _Скриншоты приложения_ 
 
 ### _Стек технологий_
+IntelliJ IDEA, SceneBuilder, Maven, Spring, PostgreSql .
