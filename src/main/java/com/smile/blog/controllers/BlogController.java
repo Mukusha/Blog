@@ -1,5 +1,6 @@
 package com.smile.blog.controllers;
 
+import com.smile.blog.models.Post;
 import com.smile.blog.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
 
 @Controller
 public class BlogController {
@@ -32,32 +35,40 @@ public class BlogController {
     }
 
     @PostMapping("/blog/add")
-    public String blogPostAdd(@RequestParam String title, @RequestParam String anons, @RequestParam String full_text, Model model){
-        postService.postAdd();
+    public String blogPostAdd(@RequestParam String subjectPost, @RequestParam String anonsPost, @RequestParam String fullTextPost){
+        //пока не указываем автора, он будет указываться в зависимости от профиля пользователя
+        // пока не вставляем теги
+        postService.postAdd(null,  subjectPost,  anonsPost,  fullTextPost, null);
         return "redirect:/blog";
     }
 
     @GetMapping("/blog/{id}")
     public  String blogDetails(@PathVariable(value = "id") long id, Model model){
-        //открыть подробности определенного поста
-        postService.postDetails();
+        ArrayList<Post> res= postService.postDetails(id);
+        if (res == null) return  "redirect:/blog";
+        model.addAttribute("post",res);
         return "postDetails";
     }
 
     @GetMapping("/blog/{id}/edit")
     public  String blogEdit(@PathVariable(value = "id") long id, Model model){
-        model.addAttribute("post",postService.findPostById());
+         ArrayList<Post> res = postService.findPostById(id);
+         if(res==null){
+            return "redirect:/blog";
+         }
+        model.addAttribute("post",res);
         return "postEdit";
     }
 
     @PostMapping("/blog/{id}/edit")
-    public String blogPostUpdate(@PathVariable(value = "id") long id,@RequestParam String title, @RequestParam String anons,@RequestParam String full_text,Model model){
-        postService.postSaveEdit();
+    public String blogPostUpdate(@PathVariable(value = "id") long id, @RequestParam String subjectPost, @RequestParam String anonsPost, @RequestParam String fullTextPost){
+       //пока не указываем автора и теги
+        postService.postSaveEdit(id,subjectPost,anonsPost,fullTextPost);
         return "redirect:/blog";
     }
 
     @PostMapping("/blog/{id}/remove")
-    public String blogPostDelete(@PathVariable(value = "id") long id,Model model){
+    public String blogPostDelete(@PathVariable(value = "id") long id){
         postService.postRemoveById(id);
         return "redirect:/blog";
     }
