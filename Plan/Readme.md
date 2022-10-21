@@ -8,6 +8,8 @@
 
 ❗ для каждой задачи из списка задач выделяется отдельная ветвь task_<номер задачи.номер подпункта>
 
+❗ для дизайна сайта можно например использовать [Bootstrap](https://getbootstrap.com/docs/5.2/examples/).
+
 ### _Структура баз данных_
 
 <p align="center"><img  src="./assets/dataPlane.png" width="50%"></p>
