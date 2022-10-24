@@ -28,4 +28,12 @@ public class Author {
         this.dateOfBirth = dateOfBirth;
        // this.dateCreate = <текущая дата и время>
     }
+
+    public Author(String fioAuthor, String nickname, String shortInformation) {
+        this.fioAuthor = fioAuthor;
+        this.nickname = nickname;
+        this.shortInformation = shortInformation;
+        this.dateOfBirth = null;
+        // this.dateCreate = <текущая дата и время>
+    }
 }

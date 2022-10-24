@@ -1,5 +1,6 @@
 package com.smile.blog.controllers;
 
+import com.smile.blog.models.Author;
 import com.smile.blog.models.Post;
 import com.smile.blog.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +30,19 @@ public class BlogController {
         return "home";
     }
 
-    @GetMapping("/blog/add")
+    @GetMapping("/blog/addPost")
     public  String blogAdd(Model model){
+
+        model.addAttribute("tasks","dfs");
         return "postAdd";
     }
 
-    @PostMapping("/blog/add")
+    @PostMapping("/blog/addPost")
     public String blogPostAdd(@RequestParam String subjectPost, @RequestParam String anonsPost, @RequestParam String fullTextPost){
         //пока не указываем автора, он будет указываться в зависимости от профиля пользователя
         // пока не вставляем теги
-        postService.postAdd(null,  subjectPost,  anonsPost,  fullTextPost, null);
+        Author author = new Author("Анохина Алефтина Тимофеевна","Anna","");
+        postService.postAdd(author,  subjectPost,  anonsPost,  fullTextPost, null);
         return "redirect:/blog";
     }
 
@@ -50,7 +54,7 @@ public class BlogController {
         return "postDetails";
     }
 
-    @GetMapping("/blog/{id}/edit")
+    @GetMapping("/blog/{id}/editPost")
     public  String blogEdit(@PathVariable(value = "id") long id, Model model){
          ArrayList<Post> res = postService.findPostById(id);
          if(res==null){
@@ -60,7 +64,7 @@ public class BlogController {
         return "postEdit";
     }
 
-    @PostMapping("/blog/{id}/edit")
+    @PostMapping("/blog/{id}/editPost")
     public String blogPostUpdate(@PathVariable(value = "id") long id, @RequestParam String subjectPost, @RequestParam String anonsPost, @RequestParam String fullTextPost){
        //пока не указываем автора и теги
         postService.postSaveEdit(id,subjectPost,anonsPost,fullTextPost);

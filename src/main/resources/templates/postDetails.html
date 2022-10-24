@@ -11,9 +11,12 @@
 <div class="container mt-5">
     <h1>Блог сайта</h1>
     <div th:each = "el : ${post}" class="alert alert-info mt-2">
+        <div style="float: right" th:text="${el.Author.nickname}">Автор</div>
         <h3 th:text="${el.subjectPost}"/>
+        <div style="float: right" >Теги</div>
         <p th:text="${el.fullTextPost}"/>
-        <a th:href="'/blog/'+${el.id}+'/edit'" class="btn btn-warning">Редактировать</a> <br><br>
+        <a th:href="'/blog/'+${el.id}+'/editPost'" class="btn btn-warning">Редактировать</a> <br><br>
+        <div style="float: right" >Дата создания</div>
         <form th:action="'/blog/'+${el.id}+'/remove'" method="post">
             <button class="btn btn-warning" type="submit">Удалить</button>
         </form>

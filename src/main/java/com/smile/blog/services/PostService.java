@@ -27,7 +27,9 @@ public class PostService {
     }
 
     public void postAdd(Author author, String subjectPost, String anonsPost, String fullTextPost, Set<Tag> tags){
-        Post post=new Post(author,  subjectPost,  anonsPost,  fullTextPost, tags);
+        //работа должна добавляться только 1 автору - текущему пользователю
+        //найти по никнейму и вернуть
+        Post post=new Post(AuthorService.findAuthorById(7L),  subjectPost,  anonsPost,  fullTextPost, tags);
         postRepository.save(post);
     }
 
