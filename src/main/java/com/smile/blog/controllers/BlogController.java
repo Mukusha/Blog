@@ -2,16 +2,17 @@ package com.smile.blog.controllers;
 
 import com.smile.blog.models.Author;
 import com.smile.blog.models.Post;
+import com.smile.blog.models.Tag;
 import com.smile.blog.services.PostService;
+import com.smile.blog.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class BlogController {
@@ -27,22 +28,23 @@ public class BlogController {
     public  String blogMain(Model model){
         //главная страница со списком постов
         model.addAttribute("posts",postService.getAllPost());
+        model.addAttribute("tags", TagService.getAllTag());
         return "home";
     }
 
     @GetMapping("/blog/addPost")
     public  String blogAdd(Model model){
-
-        model.addAttribute("tasks","dfs");
+        if (TagController.tags!=null)        model.addAttribute("tags", TagController.tags.toString());
         return "postAdd";
     }
 
     @PostMapping("/blog/addPost")
-    public String blogPostAdd(@RequestParam String subjectPost, @RequestParam String anonsPost, @RequestParam String fullTextPost){
+    public String blogPostAdd(@RequestParam String subjectPost, @RequestParam String anonsPost, @RequestParam String fullTextPost, @RequestParam String tag){
         //пока не указываем автора, он будет указываться в зависимости от профиля пользователя
         // пока не вставляем теги
         Author author = new Author("Анохина Алефтина Тимофеевна","Anna","");
-        postService.postAdd(author,  subjectPost,  anonsPost,  fullTextPost, null);
+       // post = new Post(author,  subjectPost,  anonsPost,  fullTextPost, null);
+        postService.postAdd(author,  subjectPost,  anonsPost,  fullTextPost, TagController.tags);
         return "redirect:/blog";
     }
 
@@ -76,4 +78,7 @@ public class BlogController {
         postService.postRemoveById(id);
         return "redirect:/blog";
     }
+
+
+
 }

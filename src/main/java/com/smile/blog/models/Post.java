@@ -30,4 +30,9 @@ public class Post {
         this.fullTextPost = fullTextPost;
         this.tags = tags;
     }
+
+    public Post addTag(Post post,Tag tag){
+        this.tags.add(tag);
+        return post;
+    }
 }

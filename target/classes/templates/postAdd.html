@@ -13,6 +13,20 @@
   <form action="/blog/addPost" method="post">
     <input type="text" name="subjectPost" placeholder="Введите название статьи" class=" form-control"><br>
     <input type="text" name="anonsPost" placeholder="Введите анонс статьи" class=" form-control"><br>
+  </form>
+    <div class="d-flex w-100 gap-2">
+      <form action="/blog/addPost" method="post">
+      </form>
+
+      <form action="/blog/addPost/tag" method="post">
+        <input type="text" name="tag" placeholder="Введите тег" class="form-control" >
+        <button type="submit" class="btn btn-warning">Добавить тег</button>
+      </form>
+    </div> <br>
+
+  <form action="/blog/addPost" method="post">
+    <div class="d-flex flex-column flex-sm-row w-100 gap-2"> <p>Теги:</p> <p th:text="${tags}" /> </div>
+
     <textarea type="text" name="fullTextPost" placeholder="Введите полный текст статьи" class=" form-control"></textarea><br>
     <button type="submit" class="btn btn-success">Добавить статью</button>
   </form>
