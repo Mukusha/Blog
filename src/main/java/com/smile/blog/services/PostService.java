@@ -22,14 +22,20 @@ public class PostService {
 
     public  Iterable<Post> getAllPost()
     {
-      //  Iterable<Post> posts = postRepository.findAll();
         return postRepository.findAll();
     }
 
     public void postAdd(Author author, String subjectPost, String anonsPost, String fullTextPost, Set<Tag> tags){
         //работа должна добавляться только 1 автору - текущему пользователю
-        //найти по никнейму и вернуть
+        //найти по id и вернуть
         Post post=new Post(AuthorService.findAuthorById(7L),  subjectPost,  anonsPost,  fullTextPost, tags);
+        postRepository.save(post);
+    }
+
+    public void postAdd(Post post){
+        //работа должна добавляться только 1 автору - текущему пользователю
+        //найти по id и вернуть
+        post.setAuthor(AuthorService.findAuthorById(7L));
         postRepository.save(post);
     }
 

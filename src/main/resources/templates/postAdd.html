@@ -10,25 +10,22 @@
 
 <div class="container mt-5 mb-5">
   <h1>Добавление статьи</h1>
-  <form action="/blog/addPost" method="post">
-    <input type="text" name="subjectPost" placeholder="Введите название статьи" class=" form-control"><br>
-    <input type="text" name="anonsPost" placeholder="Введите анонс статьи" class=" form-control"><br>
-  </form
+  <form action="/blog/addPost/tag" method="post">
+    <input type="text" name="subjectPost" placeholder="Введите название статьи" class=" form-control"  th:text="${post.subjectPost}"><br>
+    <input type="text" name="anonsPost" placeholder="Введите анонс статьи" class=" form-control" th:text="${post.anonsPost}"><br>
     <div class="d-flex w-100 gap-2">
-      <form action="/blog/addPost/tag" method="post">
         <input type="text" name="tag" placeholder="Введите тег" class="form-control" >
         <button type="submit" class="btn btn-warning">Добавить тег</button>
-      </form>
     </div> <br>
 
-  <form action="/blog/addPost" method="post">
-    <div class="d-flex flex-column flex-sm-row w-100 gap-2"> <p>Теги:</p>
+    <div class="d-flex flex-column flex-sm-row w-100 gap-2">
       <div th:each = "tag : ${tags}" class="alert alert-info mt-2">
-        <div style="float: right" th:text="${tag.name}">tag</div>
+        <div  th:text="'#'+${tag.name}">tag</div>
       </div>
     </div>
-
-    <textarea type="text" name="fullTextPost" placeholder="Введите полный текст статьи" class=" form-control"></textarea><br>
+    <textarea type="text" name="fullTextPost" placeholder="Введите полный текст статьи" class=" form-control" th:text="${post.fullTextPost}"></textarea><br>
+  </form>
+    <form action="/blog/addPost" method="post">
     <button type="submit" class="btn btn-success">Добавить статью</button>
   </form>
 </div>

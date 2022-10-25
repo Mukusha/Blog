@@ -24,4 +24,8 @@ public class Tag {
         this.name = name;
         this.shortDescription = shortDescription;
     }
+
+    public String toString(Tag tag){
+        return "#"+tag.name;
+    }
 }

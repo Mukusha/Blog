@@ -13,7 +13,9 @@
   <div th:each = "el : ${posts}" class="alert alert-info mt-2">
     <div style="float: right" th:text="${el.Author.nickname}">Автор</div>
     <h3 th:text="${el.subjectPost}"/>
-    <div style="float: right" th:text="${el.subjectPost}">Теги</div>
+    <div th:each = "tag : ${el.tags}">
+      <div style="float: right" th:text="'#'+${tag.name}"></div>
+    </div>
     <p th:text="${el.anonsPost}" />
     <a th:href="'/blog/'+${el.id}" class="btn btn-warning">Детальнее</a>
   </div>

@@ -18,7 +18,7 @@ public class Post {
     private String anonsPost;
     private String fullTextPost;
 
-    @OneToMany
+    @ManyToMany
     private Set<Tag> tags;
 
     public Post() {}

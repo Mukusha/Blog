@@ -11,40 +11,61 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 @Controller
 public class BlogController {
 
+    static Post post = new Post(null, "Введите название статьи","Введите анонс статьи","Введите полный текст статьи",null);
     private final PostService postService;
+    private final TagService tagService;
 
     @Autowired
-    public BlogController(PostService postService) {
+    public BlogController(PostService postService, TagService tagService) {
         this.postService = postService;
+        this.tagService = tagService;
     }
 
     @GetMapping("/blog")
     public  String blogMain(Model model){
-        //главная страница со списком постов
         model.addAttribute("posts",postService.getAllPost());
-      //  model.addAttribute("tags", TagService.getAllTag());
         return "home";
     }
 
     @GetMapping("/blog/addPost")
     public  String blogAdd(Model model){
+        model.addAttribute("post", post);
         if (TagController.tags!=null)        model.addAttribute("tags", TagController.tags);
         return "postAdd";
     }
 
-    @PostMapping("/blog/addPost")
-    public String blogPostAdd(@RequestParam String subjectPost, @RequestParam String anonsPost, @RequestParam String fullTextPost){
+    @GetMapping("/blog/addPost/tag")
+    public  String blogAddTag(Model model){
+        model.addAttribute("post", post);
+        if (TagController.tags!=null)        model.addAttribute("tags", TagController.tags);
+        return "postAdd";
+    }
+
+    @PostMapping("/blog/addPost/tag")
+    public String blogPostAdd(@RequestParam String tag,@RequestParam String subjectPost, @RequestParam String anonsPost, @RequestParam String fullTextPost){
         //пока не указываем автора, он будет указываться в зависимости от профиля пользователя
-        // пока не вставляем теги
         Author author = new Author("Анохина Алефтина Тимофеевна","Anna","");
-       // post = new Post(author,  subjectPost,  anonsPost,  fullTextPost, null);
-        postService.postAdd(author,  subjectPost,  anonsPost,  fullTextPost, TagController.tags);
+
+       if (subjectPost!="") BlogController.post.setSubjectPost(subjectPost);
+        if (anonsPost!="") BlogController.post.setAnonsPost(anonsPost);
+        if (fullTextPost!="") BlogController.post.setFullTextPost(fullTextPost);
+
+        Tag tagNew = tagService.findTagByName(tag);
+        if (tagNew!=null)       TagController.tags.add(tagNew);
+      return "redirect:/blog/addPost/tag";
+    }
+
+    @PostMapping("/blog/addPost")
+    public String blogPostAdd(){
+        //пока не указываем автора, он будет указываться в зависимости от профиля пользователя
+        Author author = new Author("Анохина Алефтина Тимофеевна","Anna",""); //пример
+        post.setTags(TagController.tags);
+      // postService.postAdd(author,  post.getSubjectPost(),  post.getAnonsPost(),  post.getFullTextPost(),TagController.tags);
+     postService.postAdd(post);
         return "redirect:/blog";
     }
 
@@ -78,7 +99,4 @@ public class BlogController {
         postService.postRemoveById(id);
         return "redirect:/blog";
     }
-
-
-
 }
