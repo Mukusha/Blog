@@ -25,7 +25,11 @@
     </div> <br>
 
   <form action="/blog/addPost" method="post">
-    <div class="d-flex flex-column flex-sm-row w-100 gap-2"> <p>Теги:</p> <p th:text="${tags}" /> </div>
+    <div class="d-flex flex-column flex-sm-row w-100 gap-2"> <p>Теги:</p>
+      <div th:each = "tag : ${tags}" class="alert alert-info mt-2">
+        <div style="float: right" th:text="${tag.name}">tag</div>
+      </div>
+    </div>
 
     <textarea type="text" name="fullTextPost" placeholder="Введите полный текст статьи" class=" form-control"></textarea><br>
     <button type="submit" class="btn btn-success">Добавить статью</button>

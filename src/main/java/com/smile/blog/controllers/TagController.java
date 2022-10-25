@@ -16,6 +16,7 @@ import java.util.Set;
 @Controller
 public class TagController {
     public static Set<Tag> tags = new HashSet<>();
+
     private final TagService tagService;
 
     @Autowired
@@ -25,8 +26,6 @@ public class TagController {
 
     @PostMapping("/blog/addPost/tag")
     public  String blogAddTagPost(@RequestParam String tag){
-        System.out.println(tag);
-
         Tag tagNew = tagService.findTagByName(tag);
         if (tagNew!=null)       tags.add(tagNew);
         return  "redirect:/blog/addPost";

@@ -28,18 +28,18 @@ public class BlogController {
     public  String blogMain(Model model){
         //главная страница со списком постов
         model.addAttribute("posts",postService.getAllPost());
-        model.addAttribute("tags", TagService.getAllTag());
+      //  model.addAttribute("tags", TagService.getAllTag());
         return "home";
     }
 
     @GetMapping("/blog/addPost")
     public  String blogAdd(Model model){
-        if (TagController.tags!=null)        model.addAttribute("tags", TagController.tags.toString());
+        if (TagController.tags!=null)        model.addAttribute("tags", TagController.tags);
         return "postAdd";
     }
 
     @PostMapping("/blog/addPost")
-    public String blogPostAdd(@RequestParam String subjectPost, @RequestParam String anonsPost, @RequestParam String fullTextPost, @RequestParam String tag){
+    public String blogPostAdd(@RequestParam String subjectPost, @RequestParam String anonsPost, @RequestParam String fullTextPost){
         //пока не указываем автора, он будет указываться в зависимости от профиля пользователя
         // пока не вставляем теги
         Author author = new Author("Анохина Алефтина Тимофеевна","Anna","");
