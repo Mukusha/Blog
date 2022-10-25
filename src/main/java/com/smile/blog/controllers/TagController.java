@@ -24,20 +24,17 @@ public class TagController {
         this.tagService = tagService;
     }
 
-  /*  @PostMapping("/blog/addPost/tag")
-    public  String blogAddTagPost(@RequestParam String tag, @RequestParam String subjectPost, @RequestParam String anonsPost, @RequestParam String fullTextPost){
-        BlogController.post.setSubjectPost(subjectPost);
-        BlogController.post.setAnonsPost(anonsPost);
-        BlogController.post.setFullTextPost(fullTextPost);
-        Tag tagNew = tagService.findTagByName(tag);
-        if (tagNew!=null)       tags.add(tagNew);
-        return  "redirect:/blog/addPost";
-    }
-*/
+
     @GetMapping("/blog/addTag/{name}/{shortDescription}")
     public String blogAddTagPost(@PathVariable(value = "name") String name,@PathVariable(value = "shortDescription") String shortDescription){
        tagService.addTag(name,shortDescription);
         System.out.println(name);
         return "redirect:/blog";
+    }
+
+    @GetMapping("/blog/addPost/removeTag/{idTag}")
+    public String deleteTagInPostById(@PathVariable(value = "idTag") long id){
+        tags.remove(TagService.findTagById(id));
+        return "redirect:/blog/addPost/tag";
     }
 }

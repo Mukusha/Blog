@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 @Controller
 public class BlogController {
@@ -66,6 +67,8 @@ public class BlogController {
         post.setTags(TagController.tags);
       // postService.postAdd(author,  post.getSubjectPost(),  post.getAnonsPost(),  post.getFullTextPost(),TagController.tags);
      postService.postAdd(post);
+     post=new Post(null, "Введите название статьи","Введите анонс статьи","Введите полный текст статьи",null);
+        TagController.tags = new HashSet<>();
         return "redirect:/blog";
     }
 
@@ -99,4 +102,6 @@ public class BlogController {
         postService.postRemoveById(id);
         return "redirect:/blog";
     }
+
+
 }

@@ -17,10 +17,10 @@
         <input type="text" name="tag" placeholder="Введите тег" class="form-control" >
         <button type="submit" class="btn btn-warning">Добавить тег</button>
     </div> <br>
-
     <div class="d-flex flex-column flex-sm-row w-100 gap-2">
       <div th:each = "tag : ${tags}" class="alert alert-info mt-2">
         <div  th:text="'#'+${tag.name}">tag</div>
+        <a th:href="@{'/blog/addPost/removeTag/' + ${tag.id}}">Delete</a>
       </div>
     </div>
     <textarea type="text" name="fullTextPost" placeholder="Введите полный текст статьи" class=" form-control" th:text="${post.fullTextPost}"></textarea><br>

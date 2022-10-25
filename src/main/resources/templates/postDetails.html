@@ -19,6 +19,7 @@
         <p th:text="${el.fullTextPost}"/>
         <a th:href="'/blog/'+${el.id}+'/editPost'" class="btn btn-warning">Редактировать</a> <br><br>
         <div style="float: right" >Дата создания</div>
+
         <form th:action="'/blog/'+${el.id}+'/remove'" method="post">
             <button class="btn btn-warning" type="submit">Удалить</button>
         </form>
