@@ -17,7 +17,7 @@ import java.util.Set;
 @Controller
 public class BlogController {
 
-    public static Post post = new Post(null, "Введите название статьи","Введите анонс статьи","Введите полный текст статьи",null);
+    public static Post post = new Post(null, null,null,null,null);
     private final PostService postService;
     private final TagService tagService;
 
@@ -133,7 +133,7 @@ public class BlogController {
 
         if (action!=null && action.equals("update")) {
             postService.postAdd(post);
-            post=new Post(null, "Введите название статьи","Введите анонс статьи","Введите полный текст статьи",null);
+            post=new Post(null, null,null,null,null);
             return "redirect:/blog";
         }
 
@@ -169,7 +169,7 @@ public class BlogController {
         if (action!=null && action.equals("savePost")) {
             System.out.println(" pipi "+ post.getFullTextPost());
             postService.postAdd(post);
-            post=new Post(null, "Введите название статьи","Введите анонс статьи","Введите полный текст статьи",null);
+            post=new Post(null, null,null,null,null);
             return "redirect:/blog";
         }
 
