@@ -22,7 +22,6 @@ public class Post {
     private Set<Tag> tags;
 
     public Post() {}
-
     public Post(Author author, String subjectPost, String anonsPost, String fullTextPost, Set<Tag> tags) {
         this.author = author;
         this.subjectPost = subjectPost;
@@ -31,16 +30,4 @@ public class Post {
         this.tags = tags;
     }
 
-    public Post addTag(Post post,Tag tag){
-        this.tags.add(tag);
-        return post;
-    }
-
-    public static Post deleteTag(Post post, Tag tag){
-        Set<Tag> tagsNew = post.getTags();
-        tagsNew.remove(tag);
-        post.setTags(tagsNew);
-     //   post.tags.remove(tag);
-        return post;
-    }
 }
