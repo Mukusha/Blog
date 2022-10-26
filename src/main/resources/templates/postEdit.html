@@ -10,13 +10,27 @@
 
 <div class="container mt-5 mb-5">
     <h1>Редактирование статьи</h1>
+
     <div th:each="el : ${post}">
-        <form method="post">
+        <form action="/blog/{id}/editPost/tag" method="post"   >
             <input type="text" th:value="${el.subjectPost}" name="subjectPost" placeholder="Введите название статьи" class=" form-control"><br>
             <input type="text" th:value="${el.anonsPost}" name="anonsPost" placeholder="Введите анонс статьи" class=" form-control"><br>
-            <textarea name="fullTextPost" placeholder="Введите полный текст статьи" class=" form-control" th:text="${el.fullTextPost}" /><br>
-            <button type="submit" class="btn btn-success">Обновить</button>
+
+            <div class="d-flex w-100 gap-2">
+                <input type="text" name="tag" placeholder="Введите тег" class="form-control" >
+                <button type="submit" class="btn btn-warning">Добавить тег</button>
+            </div> <br>
+            <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+                <div th:each = "tag : ${tags}" class="alert alert-info mt-2">
+                    <div  th:text="'#'+${tag.name}">tag</div>
+                    <a th:href="@{'/blog/editPost/removeTag/' + ${tag.id}}">Delete</a>
+                </div>
+            </div>
+            <textarea type="text" name="fullTextPost" th:text="${el.fullTextPost}" placeholder="Введите полный текст статьи" class=" form-control" ></textarea>
+            <br>
+            <button type="submit" name="action" value="update">Обновить</button>
         </form>
+
     </div>
 
 </div>

@@ -1,5 +1,6 @@
 package com.smile.blog.services;
 
+import com.smile.blog.controllers.BlogController;
 import com.smile.blog.models.Author;
 import com.smile.blog.models.Post;
 import com.smile.blog.models.Tag;
@@ -35,8 +36,12 @@ public class PostService {
     public void postAdd(Post post){
         //работа должна добавляться только 1 автору - текущему пользователю
         //найти по id и вернуть
-        post.setAuthor(AuthorService.findAuthorById(7L));
-        postRepository.save(post);
+       BlogController.post.setAuthor(AuthorService.findAuthorById(7L));
+        System.out.println("postAdd в бд");
+        System.out.println(" Tema "+ BlogController.post.getSubjectPost());
+        System.out.println(" Anons "+ BlogController.post.getAnonsPost());
+        System.out.println(" Full "+ BlogController.post.getFullTextPost());
+        postRepository.save( BlogController.post);
     }
 
     public ArrayList<Post> postDetails(Long id){
@@ -59,12 +64,13 @@ public class PostService {
         return res;
     }
 
-    public void postSaveEdit(Long id, String subjectPost, String anonsPost, String fullTextPost){
+    public void postSaveEdit(Long id, String subjectPost, String anonsPost, String fullTextPost, Set<Tag> tags){
         Post post=postRepository.findById(id).orElseThrow();
         // потом добавить автора и теги
         post.setSubjectPost(subjectPost);
         post.setAnonsPost(anonsPost);
         post.setFullTextPost(fullTextPost);
+        post.setTags(tags);
         postRepository.save(post);
     }
 

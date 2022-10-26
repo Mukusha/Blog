@@ -10,26 +10,26 @@
 
 <div class="container mt-5 mb-5">
   <h1>Добавление статьи</h1>
-  <form action="/blog/addPost/tag" method="post">
-    <input type="text" name="subjectPost" placeholder="Введите название статьи" class=" form-control"  th:text="${post.subjectPost}"><br>
-    <input type="text" name="anonsPost" placeholder="Введите анонс статьи" class=" form-control" th:text="${post.anonsPost}"><br>
+  <form action="/blog/addPost" method="post">
+    <input type="text" name="subjectPost" placeholder="Введите название статьи" class=" form-control"  th:value="${post.subjectPost}"><br>
+    <input type="text" name="anonsPost" placeholder="Введите анонс статьи" class=" form-control" th:value="${post.anonsPost}"><br>
+
     <div class="d-flex w-100 gap-2">
         <input type="text" name="tag" placeholder="Введите тег" class="form-control" >
         <button type="submit" class="btn btn-warning">Добавить тег</button>
     </div> <br>
+
     <div class="d-flex flex-column flex-sm-row w-100 gap-2">
       <div th:each = "tag : ${tags}" class="alert alert-info mt-2">
         <div  th:text="'#'+${tag.name}">tag</div>
         <a th:href="@{'/blog/addPost/removeTag/' + ${tag.id}}">Delete</a>
       </div>
     </div>
-    <textarea type="text" name="fullTextPost" placeholder="Введите полный текст статьи" class=" form-control" th:text="${post.fullTextPost}"></textarea><br>
-  </form>
-    <form action="/blog/addPost" method="post">
-    <button type="submit" class="btn btn-success">Добавить статью</button>
-  </form>
-</div>
 
+    <textarea type="text" name="fullTextPost" th:text="${post.fullTextPost}" placeholder="Введите полный текст статьи" class=" form-control" ></textarea>
+   <button type="submit" name="action" value="savePost">Добавить статью</button>
+
+</form>
 <div th:insert="/blocks/footer :: footer"></div>
 
 </body>

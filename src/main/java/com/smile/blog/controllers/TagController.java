@@ -1,5 +1,6 @@
 package com.smile.blog.controllers;
 
+import com.smile.blog.models.Post;
 import com.smile.blog.models.Tag;
 import com.smile.blog.services.PostService;
 import com.smile.blog.services.TagService;
@@ -34,7 +35,15 @@ public class TagController {
 
     @GetMapping("/blog/addPost/removeTag/{idTag}")
     public String deleteTagInPostById(@PathVariable(value = "idTag") long id){
-        tags.remove(TagService.findTagById(id));
-        return "redirect:/blog/addPost/tag";
+        BlogController.post.getTags().remove(TagService.findTagById(id));
+     //   System.out.println(  BlogController.post.getTags());
+        return "redirect:/blog/addPost";
+    }
+
+
+    @GetMapping("/blog/editPost/removeTag/{idTag}")
+    public String deleteTagInEditPostById(@PathVariable(value = "idTag") long id){
+        BlogController.post.getTags().remove(TagService.findTagById(id));
+        return "redirect:/blog/"+BlogController.post.getId()+ "/editPost/tag";
     }
 }

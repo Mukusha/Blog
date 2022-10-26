@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class BlogController {
 
-    static Post post = new Post(null, "Введите название статьи","Введите анонс статьи","Введите полный текст статьи",null);
+    public static Post post = new Post(null, "Введите название статьи","Введите анонс статьи","Введите полный текст статьи",null);
     private final PostService postService;
     private final TagService tagService;
 
@@ -32,7 +33,7 @@ public class BlogController {
         return "home";
     }
 
-    @GetMapping("/blog/addPost")
+ /*   @GetMapping("/blog/addPost")
     public  String blogAdd(Model model){
         model.addAttribute("post", post);
         if (TagController.tags!=null)        model.addAttribute("tags", TagController.tags);
@@ -44,9 +45,9 @@ public class BlogController {
         model.addAttribute("post", post);
         if (TagController.tags!=null)        model.addAttribute("tags", TagController.tags);
         return "postAdd";
-    }
+    }*/
 
-    @PostMapping("/blog/addPost/tag")
+     /* @PostMapping("/blog/addPost/tag")
     public String blogPostAdd(@RequestParam String tag,@RequestParam String subjectPost, @RequestParam String anonsPost, @RequestParam String fullTextPost){
         //пока не указываем автора, он будет указываться в зависимости от профиля пользователя
         Author author = new Author("Анохина Алефтина Тимофеевна","Anna","");
@@ -60,7 +61,7 @@ public class BlogController {
       return "redirect:/blog/addPost/tag";
     }
 
-    @PostMapping("/blog/addPost")
+  @PostMapping("/blog/addPost")
     public String blogPostAdd(){
         //пока не указываем автора, он будет указываться в зависимости от профиля пользователя
         Author author = new Author("Анохина Алефтина Тимофеевна","Anna",""); //пример
@@ -70,7 +71,7 @@ public class BlogController {
      post=new Post(null, "Введите название статьи","Введите анонс статьи","Введите полный текст статьи",null);
         TagController.tags = new HashSet<>();
         return "redirect:/blog";
-    }
+    }*/
 
     @GetMapping("/blog/{id}")
     public  String blogDetails(@PathVariable(value = "id") long id, Model model){
@@ -80,27 +81,99 @@ public class BlogController {
         return "postDetails";
     }
 
-    @GetMapping("/blog/{id}/editPost")
-    public  String blogEdit(@PathVariable(value = "id") long id, Model model){
-         ArrayList<Post> res = postService.findPostById(id);
-         if(res==null){
-            return "redirect:/blog";
-         }
-        model.addAttribute("post",res);
-        return "postEdit";
-    }
-
-    @PostMapping("/blog/{id}/editPost")
-    public String blogPostUpdate(@PathVariable(value = "id") long id, @RequestParam String subjectPost, @RequestParam String anonsPost, @RequestParam String fullTextPost){
-       //пока не указываем автора и теги
-        postService.postSaveEdit(id,subjectPost,anonsPost,fullTextPost);
-        return "redirect:/blog";
-    }
 
     @PostMapping("/blog/{id}/remove")
     public String blogPostDelete(@PathVariable(value = "id") long id){
         postService.postRemoveById(id);
         return "redirect:/blog";
+    }
+
+    @GetMapping("/blog/{id}/editPost")
+    public  String blogEdit(@PathVariable(value = "id") long id, Model model){
+        ArrayList<Post> res = postService.findPostById(id);
+        if(res==null){
+            return "redirect:/blog";
+        }
+        post=res.get(0);
+        System.out.println("editTag "+post.getTags());
+        model.addAttribute("post",post);
+        model.addAttribute("tags",post.getTags());
+        return "postEdit";
+    }
+
+    @GetMapping("/blog/{id}/editPost/tag")
+    public  String blogEditTag(@PathVariable(value = "id") long id, Model model){
+        ArrayList<Post> res = postService.findPostById(id);
+        if(res==null){
+            return "redirect:/blog";
+        }
+
+        System.out.println("editTag "+post.getTags());
+        model.addAttribute("post",post);
+        model.addAttribute("tags",post.getTags());
+        return "postEdit";
+    }
+
+    @PostMapping("/blog/{id}/editPost/tag")
+    public String blogPostUpdateTag(@RequestParam(value="action", required=false) String action, @RequestParam String subjectPost, @RequestParam String anonsPost, @RequestParam String fullTextPost,@RequestParam String tag, Model model){
+        //пока не указываем автора и теги
+        if (subjectPost!=null) post.setSubjectPost(subjectPost);
+        if (anonsPost!=null) post.setAnonsPost(anonsPost);
+        if (fullTextPost!=null) post.setFullTextPost(fullTextPost);
+
+        Tag tagNew = tagService.findTagByName(tag);
+        if (tagNew!=null)    {
+            Set<Tag> tagsN= post.getTags();
+            tagsN.add(tagNew);
+            post.setTags(tagsN);
+        }
+
+        model.addAttribute("post", post);
+        model.addAttribute("tags", post.getTags());
+
+        if (action!=null && action.equals("update")) {
+            postService.postAdd(post);
+            post=new Post(null, "Введите название статьи","Введите анонс статьи","Введите полный текст статьи",null);
+            return "redirect:/blog";
+        }
+
+        return "postEdit";
+    }
+
+    ////!!
+    @GetMapping("/blog/addPost")
+    public  String blogAdd(Model model){
+        model.addAttribute("post",post);
+        model.addAttribute("tags",post.getTags());
+        return "postAdd";
+    }
+
+    @PostMapping("/blog/addPost")
+    public String blogPostAdd(@RequestParam(value="action", required=false) String action, @RequestParam String subjectPost, @RequestParam String anonsPost, @RequestParam String fullTextPost,@RequestParam String tag, Model model){
+        //пока не указываем автора и теги
+        if (subjectPost!=null) post.setSubjectPost(subjectPost);
+        if (anonsPost!=null) post.setAnonsPost(anonsPost);
+        if (fullTextPost!=null) post.setFullTextPost(fullTextPost);
+
+        Tag tagNew = tagService.findTagByName(tag);
+        if (tagNew!=null)    {
+            Set<Tag> tagsN = post.getTags();
+            if(tagsN == null) tagsN = new HashSet<>();
+            tagsN.add(tagNew);
+            post.setTags(tagsN);
+        }
+
+        model.addAttribute("post", post);
+        model.addAttribute("tags", post.getTags());
+
+        if (action!=null && action.equals("savePost")) {
+            System.out.println(" pipi "+ post.getFullTextPost());
+            postService.postAdd(post);
+            post=new Post(null, "Введите название статьи","Введите анонс статьи","Введите полный текст статьи",null);
+            return "redirect:/blog";
+        }
+
+        return "postAdd";
     }
 
 

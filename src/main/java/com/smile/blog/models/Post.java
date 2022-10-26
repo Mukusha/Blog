@@ -35,4 +35,12 @@ public class Post {
         this.tags.add(tag);
         return post;
     }
+
+    public static Post deleteTag(Post post, Tag tag){
+        Set<Tag> tagsNew = post.getTags();
+        tagsNew.remove(tag);
+        post.setTags(tagsNew);
+     //   post.tags.remove(tag);
+        return post;
+    }
 }
