@@ -18,11 +18,10 @@ public class Post {
     private String anonsPost;
     private String fullTextPost;
 
-    @OneToMany
+    @ManyToMany
     private Set<Tag> tags;
 
     public Post() {}
-
     public Post(Author author, String subjectPost, String anonsPost, String fullTextPost, Set<Tag> tags) {
         this.author = author;
         this.subjectPost = subjectPost;
@@ -30,4 +29,5 @@ public class Post {
         this.fullTextPost = fullTextPost;
         this.tags = tags;
     }
+
 }

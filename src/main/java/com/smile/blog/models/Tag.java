@@ -13,15 +13,10 @@ public class Tag {
     private Long id;
     private String name;
     private String shortDescription;
-
     public Tag() {}
-
-    public Tag(String name) {
-        this.name = name;
-    }
-
     public Tag(String name, String shortDescription) {
         this.name = name;
         this.shortDescription = shortDescription;
     }
+
 }

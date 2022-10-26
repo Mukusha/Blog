@@ -14,7 +14,7 @@
 
 ### _Структура баз данных_
 
-<p align="center"><img  src="./assets/dataPlane.png" width="50%"></p>
+<p align="center"><img  src="./assets/dataPlane.png" width="80%"></p>
 
 Под нижней чертой написано, что еще можно добавить кроме запланированного.
 
