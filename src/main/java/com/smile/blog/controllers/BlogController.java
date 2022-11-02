@@ -96,14 +96,14 @@ public class BlogController {
 
     @GetMapping("/blog/addPost/removeTag/{idTag}")
     public String deleteTagInPostById(@PathVariable(value = "idTag") long id){
-        postService.getPost().getTags().remove(TagService.findTagById(id));
+        postService.getPost().getTags().remove(tagService.findTagById(id));
         return "redirect:/blog/addPost";
     }
 
 
     @GetMapping("/blog/editPost/removeTag/{idTag}")
     public String deleteTagInEditPostById(@PathVariable(value = "idTag") long id){
-        postService.getPost().getTags().remove(TagService.findTagById(id));
+        postService.getPost().getTags().remove(tagService.findTagById(id));
         return "redirect:/blog/"+ postService.getPost().getId()+ "/editPost/tag";
     }
 }
