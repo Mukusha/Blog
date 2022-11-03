@@ -15,5 +15,8 @@ public interface UserService extends UserDetailsService {
 
      List<? extends GrantedAuthority> mapRolesToAthorities(Set<Role> roles);
 
+    /**
+     * Добавляет нового пользователя
+     * */
     void addUser(User user) throws Exception;
 }
