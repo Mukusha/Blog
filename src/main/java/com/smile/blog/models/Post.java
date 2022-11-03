@@ -1,5 +1,7 @@
 package com.smile.blog.models;
 
+
+
 import lombok.Data;
 
 import javax.persistence.*;
