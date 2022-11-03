@@ -69,7 +69,6 @@ public class PostServiceImpl implements PostService {
         if (fullTextPost!=null) post.setFullTextPost(fullTextPost);
 
         Tag tagNew = tagService.findTagByName(tag);
-        System.out.println(tagNew);
         if (tagNew!=null)    {
             Set<Tag> tagsN= post.getTags();
             if(tagsN == null) tagsN = new HashSet<>();

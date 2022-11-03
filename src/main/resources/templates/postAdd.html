@@ -15,8 +15,8 @@
     <input type="text" name="anonsPost" placeholder="Введите анонс статьи" class=" form-control" th:value="${post.anonsPost}"><br>
 
     <div class="d-flex w-100 gap-2">
-        <input type="text" name="tag" placeholder="Введите тег" class="form-control" >
-        <button type="submit" class="btn btn-warning">Добавить тег</button>
+      <input type="text" name="tag" placeholder="Введите тег" class="form-control" >
+      <button type="submit" class="btn btn-warning">Добавить тег</button>
     </div> <br>
 
     <div class="d-flex flex-column flex-sm-row w-100 gap-2">
@@ -27,10 +27,10 @@
     </div>
 
     <textarea type="text" name="fullTextPost" th:text="${post.fullTextPost}" placeholder="Введите полный текст статьи" class=" form-control" ></textarea>
-   <button type="submit" name="action" value="savePost">Добавить статью</button>
+    <button type="submit" name="action" value="savePost">Добавить статью</button>
 
-</form>
-<div th:insert="/blocks/footer :: footer"></div>
+  </form>
+  <div th:insert="/blocks/footer :: footer"></div>
 </div>
 </body>
 </html>
