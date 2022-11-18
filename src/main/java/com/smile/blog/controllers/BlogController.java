@@ -1,9 +1,11 @@
 package com.smile.blog.controllers;
 
 import com.smile.blog.models.Post;
+import com.smile.blog.models.User;
 import com.smile.blog.services.PostService;
 import com.smile.blog.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +31,14 @@ public class BlogController {
     }
 
     @GetMapping("/blog/{id}")
-    public  String blogDetails(@PathVariable(value = "id") long id, Model model){
+    public  String blogDetails(
+            @AuthenticationPrincipal User user,
+            @PathVariable(value = "id") long id, Model model){
         ArrayList<Post> res= postService.postDetails(id);
         if (res == null) return  "redirect:/blog";
+        //имеете ли вы право редактирования
+        if(user.getAuthor().getId() != res.get(0).getAuthor().getId())  model.addAttribute("isAuthor",false);
+        else model.addAttribute("isAuthor",true);
         model.addAttribute("post",res);
         return "postDetails";
     }
@@ -76,12 +83,19 @@ public class BlogController {
     }
 
     @PostMapping("/blog/addPost")
-    public String blogPostAdd(@RequestParam(value="action", required=false) String action, @RequestParam String subjectPost, @RequestParam String anonsPost, @RequestParam String fullTextPost,@RequestParam String tag, Model model){
+    public String blogPostAdd(
+            @AuthenticationPrincipal User user,
+            @RequestParam(value="action", required=false) String action,
+                              @RequestParam String subjectPost,
+                              @RequestParam String anonsPost,
+                              @RequestParam String fullTextPost,
+                              @RequestParam String tag, Model model){
         postService.blogPostUpdate( subjectPost,   anonsPost,   fullTextPost,  tag);
 
         model.addAttribute("post", postService.getPost());
 
         if (action!=null && action.equals("savePost")) {
+            postService.getPost().setAuthor(user.getAuthor());
             postService.saveAndResetPost();
             return "redirect:/blog";
         }

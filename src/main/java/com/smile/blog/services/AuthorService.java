@@ -3,17 +3,17 @@ package com.smile.blog.services;
 import com.smile.blog.models.Author;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
+
 @Component
 public interface AuthorService {
 
     /**
      * Добавляет данные нового пользователя в таблицу
      * пока указываются не все данные, далее будет дополнено датой рождения, регистрации
-     * @param fio - ФИО пользователя
      * @param nickname - ник пользователя
-     * @param shortInformation - краткая информация о пользователе
      * */
-    void profileAdd(String fio, String nickname, String shortInformation);
+    Author profileAdd(String nickname);
 
     /**
      * Поиск информации об авторе по его id
@@ -25,4 +25,9 @@ public interface AuthorService {
      * @param nickname - ник пользователя
      * */
    Long findIdByNickname(String nickname);
+    /**
+     * Сохранить изменения в профиле
+     * @param nickname - ник пользователя
+     * */
+    void AuthorSaveUpdate(Long id, String nickname,String shortInformation,  String dateOfBirth) throws ParseException;
 }
