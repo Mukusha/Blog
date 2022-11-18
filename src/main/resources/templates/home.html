@@ -8,7 +8,11 @@
 <body>
 <header th:insert="/blocks/header :: header"></header>
 
+
 <div class="container mt-5">
+
+
+
   <h1>Последние публикации</h1>
   <div th:each = "el : ${posts}" class="alert alert-info mt-2">
     <a style="float: right" th:href="'/blog/profile/'+${el.Author.id}" th:text="${el.Author.nickname}">Автор</a>

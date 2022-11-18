@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,9 +33,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-      //  User myUser = userRepository.findByUsername(username);
-     //   return new org.springframework.security.core.userdetails.User(myUser.getUsername(), myUser.getPassword(), mapRolesToAthorities(myUser.getRoles()));
-    return userRepository.findByUsername(username);
+      return userRepository.findByUsername(username);
     }
 
     @Override
@@ -57,6 +56,11 @@ public class UserServiceImpl implements UserService {
         Author author= authorService.profileAdd(user.getUsername());
         user.setAuthor(author);
         userRepository.save(user);
+    }
+
+    @Override
+    public Long findAuthorIdByUsername(String name){
+        return userRepository.findByUsername(name).getAuthor().getId();
     }
 
 }

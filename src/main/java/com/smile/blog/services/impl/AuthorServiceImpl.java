@@ -2,6 +2,7 @@ package com.smile.blog.services.impl;
 
 import com.smile.blog.models.Author;
 import com.smile.blog.repositories.AuthorRepository;
+import com.smile.blog.repositories.UserRepository;
 import com.smile.blog.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @Service
 public class AuthorServiceImpl implements AuthorService {
     private static AuthorRepository authorRepository;
+
 
     @Autowired
     public AuthorServiceImpl(AuthorRepository authorRepository) {
@@ -36,6 +38,7 @@ public class AuthorServiceImpl implements AuthorService {
         Optional<Author> authors = authorRepository.findById(id);
         return authors.get();
     }
+
 
     @Override
     public Long findIdByNickname(String nickname){

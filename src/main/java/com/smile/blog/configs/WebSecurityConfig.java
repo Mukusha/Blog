@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     //Все остальные страницы требуют аутентификации
                     .anyRequest().authenticated()
                 .and()
-                    .csrf().disable() //что бы не падали Post запросы
+                    .csrf().disable() //что бы не падали Post запросы. Это связано с токенами
                     .formLogin()
                     .permitAll()
                 .and()

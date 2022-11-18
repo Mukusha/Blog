@@ -19,4 +19,9 @@ public interface UserService extends UserDetailsService {
      * Добавляет нового пользователя
      * */
     void addUser(User user) throws Exception;
+
+    /*
+    * Поиск id текущего автора
+    * */
+    Long findAuthorIdByUsername(String name);
 }

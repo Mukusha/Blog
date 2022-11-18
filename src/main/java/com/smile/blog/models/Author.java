@@ -36,7 +36,9 @@ public class Author {
 
     public Author(String nickname) {
         this.nickname = nickname;
+        this.dateCreate  = new Timestamp(System.currentTimeMillis());
     }
+    
     public long getAge(){
         if (this.dateOfBirth == null) return 0l;
        long y= (new Timestamp(System.currentTimeMillis()).getYear() - this.dateOfBirth.getYear());

@@ -4,6 +4,7 @@ import com.smile.blog.models.Author;
 import com.smile.blog.models.User;
 import com.smile.blog.services.AuthorService;
 import com.smile.blog.services.PostService;
+import com.smile.blog.services.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,24 +20,37 @@ public class ProfileController {
 
     private final AuthorService authorService;
     private final PostService postService;
+    private final UserService userService;
 
-    public ProfileController(AuthorService authorService, PostService postService) {
+    public ProfileController(AuthorService authorService, PostService postService, UserService userService) {
         this.authorService = authorService;
         this.postService = postService;
+        this.userService = userService;
     }
 
     @GetMapping("/blog/profile/{id}")
     public  String profileDetails(@PathVariable(value = "id") long id,Model model){
-        // кнопка редактировать появляется только для хозяина страницы
+        //! кнопка редактировать появляется только для хозяина страницы
         Author author = authorService.findAuthorById(id);
         model.addAttribute("author", author);
+        model.addAttribute("age", author.getAge());
+        model.addAttribute("posts", postService.getAllPostAuthor(author));
+        return "profileDetails";
+    }
+
+    @GetMapping("/profile/{name}")
+    public  String profileDetailsByUserName(@PathVariable(value = "name") String name,Model model){
+        //! кнопка редактировать появляется только для хозяина страницы
+        Author author = authorService.findAuthorById(userService.findAuthorIdByUsername(name));
+        model.addAttribute("author", author);
+        model.addAttribute("age", author.getAge());
         model.addAttribute("posts", postService.getAllPostAuthor(author));
         return "profileDetails";
     }
 
     @PostMapping("/blog/profile/{id}")
     public String profileDetailsPost(@PathVariable(value = "id") long id, Model model){
-        //обработка кнопок редактировать и удалить
+        //обработка кнопок редактировать и удалить страницу
         return "profileDetails";
     }
 
@@ -52,7 +66,7 @@ public class ProfileController {
         //
         Author author = authorService.findAuthorById(id);
         model.addAttribute("author", author);
-        model.addAttribute("age", author.getAge());
+        model.addAttribute("age", author.getDateOfBirth());
         return "profileDetailsEdit";
     }
 

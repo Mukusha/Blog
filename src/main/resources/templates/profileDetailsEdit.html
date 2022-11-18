@@ -72,10 +72,9 @@ body{background:url(https://bootstraptema.ru/images/bg/bg-1.png)}
               <h4>Профиль</h4>
               <table class="table table-th-block">
                 <tbody>
-                <tr><td class="active">Зарегистрирован:</td><td>12-06-2016</td></tr>
-                <tr><td class="active">Последняя активность:</td><td>12-06-2016 / 09:11</td></tr>
                 <tr><td class="active">Пол:</td><td>...</td></tr>
                 <tr><td class="active">Дата рождения:</td><td><input type="date" id="start"  th:value="age" th:name="dateOfBirth" min="1922-01-01" max="2022-11-31"></td></tr>
+                <tr><td class="active">Зарегистрирован:</td><td><p th:text="${author.dateCreate}"></td></tr>
                 </tbody>
               </table>
             </div>
