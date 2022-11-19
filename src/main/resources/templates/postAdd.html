@@ -11,7 +11,12 @@
 <div class="container mt-5 mb-5">
   <h1>Добавление статьи</h1>
   <form action="/blog/addPost" method="post">
-    <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+    <fieldset>
+      <input type="hidden"
+             th:name="${_csrf.parameterName}"
+             th:value="${_csrf.token}" />
+    </fieldset>
+
     <input type="text" name="subjectPost" placeholder="Введите название статьи" class=" form-control"  th:value="${post.subjectPost}"><br>
     <input type="text" name="anonsPost" placeholder="Введите анонс статьи" class=" form-control" th:value="${post.anonsPost}"><br>
 

@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -28,13 +27,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login", "/registration").permitAll()
                 //Все остальные страницы требуют аутентификации
                 .anyRequest().authenticated()
-                //что бы не падали Post запросы. Это связано с токенами
-                .and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and().formLogin().permitAll()
-                .and().logout().permitAll();
+                .and().logout().permitAll()
+                .and().httpBasic();
         //   return http.build();
     }
-
 
     // сохранение информации о пользователе, что бы получать её в контроллере
     @Override
