@@ -29,7 +29,7 @@
 <p align="center"><img  src="./assets/storyboard.png" width="80%"></p>
 
 ## _Ожидаемая файловая структура_
-
+<p align="center"><img  src="./assets/Structure.png" width="80%"></p>
 <p align="center"><img  src="./assets/Folder structure java.PNG" width="50%"></p>
 <p align="center"><img  src="./assets/Folder structure resources.PNG" width="50%"></p>
 
