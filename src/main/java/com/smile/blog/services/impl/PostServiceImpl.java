@@ -1,5 +1,6 @@
 package com.smile.blog.services.impl;
 
+import com.smile.blog.models.Author;
 import com.smile.blog.models.Post;
 import com.smile.blog.models.Tag;
 import com.smile.blog.repositories.PostRepository;
@@ -37,9 +38,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void postAdd(Post post){
-        //работа должна добавляться только 1 автору - текущему пользователю
-        //найти по id и вернуть
-        post.setAuthor(authorService.findAuthorById(7L));
         postRepository.save(post);
     }
 
@@ -63,7 +61,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void blogPostUpdate(String subjectPost,  String anonsPost,  String fullTextPost, String tag){
+    public Iterable<Post> getAllPostAuthor(Author author) {
+        return postRepository.findByAuthor(author);
+    }
+
+    @Override
+    public void blogPostUpdate( String subjectPost,  String anonsPost,  String fullTextPost, String tag){
         if (subjectPost!=null) post.setSubjectPost(subjectPost);
         if (anonsPost!=null) post.setAnonsPost(anonsPost);
         if (fullTextPost!=null) post.setFullTextPost(fullTextPost);

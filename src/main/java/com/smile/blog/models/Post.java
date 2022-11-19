@@ -14,7 +14,8 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+   // @JoinColumn(name = "user_id")
     private Author author;
     private String subjectPost;
     private String anonsPost;

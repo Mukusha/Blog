@@ -2,15 +2,21 @@ package com.smile.blog.services.impl;
 
 import com.smile.blog.models.Author;
 import com.smile.blog.repositories.AuthorRepository;
+import com.smile.blog.repositories.UserRepository;
 import com.smile.blog.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
     private static AuthorRepository authorRepository;
+
 
     @Autowired
     public AuthorServiceImpl(AuthorRepository authorRepository) {
@@ -18,10 +24,11 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void profileAdd(String fioAuthor, String nickname, String shortInformation){
+    public Author profileAdd(String nickname){
         //позже добавить сохранение даты
-        Author author = new Author(fioAuthor,  nickname,  shortInformation);
+        Author author = new Author( nickname);
         authorRepository.save(author);
+        return author;
     }
     @Override
     public Author findAuthorById(Long id){
@@ -31,6 +38,7 @@ public class AuthorServiceImpl implements AuthorService {
         Optional<Author> authors = authorRepository.findById(id);
         return authors.get();
     }
+
 
     @Override
     public Long findIdByNickname(String nickname){
@@ -42,5 +50,18 @@ public class AuthorServiceImpl implements AuthorService {
         Optional<Author> authors = authorRepository.findById(id);
         Author author = authors.get();
         return id;
+    }
+
+    @Override
+    public void AuthorSaveUpdate(Long id,String nickname, String shortInformation, String dateOfBirth) throws ParseException {
+        Author author=authorRepository.findById(id).orElseThrow();
+        author.setNickname(nickname);
+        author.setShortInformation(shortInformation);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date parsedDate = dateFormat.parse(dateOfBirth);
+        Timestamp t = new Timestamp( parsedDate.getTime());
+        author.setDateOfBirth(t);
+        authorRepository.save(author);
     }
 }

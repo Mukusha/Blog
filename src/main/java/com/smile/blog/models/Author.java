@@ -22,18 +22,26 @@ public class Author {
     public Author() {}
 
     public Author(String fioAuthor, String nickname, String shortInformation, Timestamp dateOfBirth) {
-        this.fioAuthor = fioAuthor;
         this.nickname = nickname;
         this.shortInformation = shortInformation;
         this.dateOfBirth = dateOfBirth;
-       // this.dateCreate = <текущая дата и время>
+        this.dateCreate  = new Timestamp(System.currentTimeMillis());
     }
 
-    public Author(String fioAuthor, String nickname, String shortInformation) {
-        this.fioAuthor = fioAuthor;
+    public Author(String nickname, String shortInformation,Timestamp dateOfBirth) {
         this.nickname = nickname;
         this.shortInformation = shortInformation;
-        this.dateOfBirth = null;
-        // this.dateCreate = <текущая дата и время>
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Author(String nickname) {
+        this.nickname = nickname;
+        this.dateCreate  = new Timestamp(System.currentTimeMillis());
+    }
+    
+    public long getAge(){
+        if (this.dateOfBirth == null) return 0l;
+       long y= (new Timestamp(System.currentTimeMillis()).getYear() - this.dateOfBirth.getYear());
+        return y;
     }
 }

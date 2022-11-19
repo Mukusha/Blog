@@ -24,6 +24,7 @@ public class RegistrationController {
     }
 
     //для сохранения формы регистрации
+    //сделать связь с таблицей авторов
     @PostMapping("/registration")
     public String adduser(User user, Model model)
     {

@@ -1,5 +1,6 @@
 package com.smile.blog.services;
 
+import com.smile.blog.models.Author;
 import com.smile.blog.models.Post;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +29,11 @@ public interface PostService {
      * Ищет пост по его id и сохраняет его в локальную переменную post
      */
     void findPostById(Long id);
+
+    /**
+     * Возвращает список постов автора
+     * */
+    Iterable<Post> getAllPostAuthor(Author author);
 
     /**
      * Обновляет данные локального post

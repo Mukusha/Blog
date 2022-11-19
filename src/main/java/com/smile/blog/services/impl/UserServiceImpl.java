@@ -1,8 +1,10 @@
 package com.smile.blog.services.impl;
 
+import com.smile.blog.models.Author;
 import com.smile.blog.models.Role;
 import com.smile.blog.models.User;
 import com.smile.blog.repositories.UserRepository;
+import com.smile.blog.services.AuthorService;
 import com.smile.blog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,23 +15,25 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final AuthorService authorService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, AuthorService authorService) {
         this.userRepository = userRepository;
+        this.authorService = authorService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        User myUser = userRepository.findByUsername(username);
-        return new org.springframework.security.core.userdetails.User(myUser.getUsername(), myUser.getPassword(), mapRolesToAthorities(myUser.getRoles()));
+      return userRepository.findByUsername(username);
     }
 
     @Override
@@ -49,7 +53,14 @@ public class UserServiceImpl implements UserService {
 
         user.setRoles(Collections.singleton(Role.USER));
         user.setActive(true);
+        Author author= authorService.profileAdd(user.getUsername());
+        user.setAuthor(author);
         userRepository.save(user);
+    }
+
+    @Override
+    public Long findAuthorIdByUsername(String name){
+        return userRepository.findByUsername(name).getAuthor().getId();
     }
 
 }
