@@ -31,7 +31,7 @@ public class RegistrationController {
         try
         {
             userService.addUser(user);
-            return "redirect:/login";
+            return "redirect:/blog";
         }
         catch (Exception ex)
         {

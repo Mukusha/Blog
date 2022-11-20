@@ -22,6 +22,11 @@
         <div style="float: right" >Дата создания</div>
 
         <form th:action="'/blog/'+${el.id}+'/remove'" method="post">
+            <fieldset>
+                <input type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}" />
+            </fieldset>
             <button  th:if="${isAuthor}" class="btn btn-warning" type="submit">Удалить</button>
         </form>
     </div>
