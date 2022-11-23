@@ -73,15 +73,6 @@ public class UserServiceImpl implements UserService {
         if (maybeUser.isEmpty()) return;
         var user = maybeUser.get();
         userRepository.delete(user);
-
-        /*
-        var author = user.getAuthor();
-        var posts = postService.getAllPostAuthor(author);
-        for (var post: posts) {
-            postService.postRemoveById(post.getId());
-        }
-        authorRepository.delete(author);
-        */
     }
 }
 

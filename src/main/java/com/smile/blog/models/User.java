@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "my_users")
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue
@@ -21,8 +21,7 @@ public class User implements UserDetails {
     public String username;
     public String password;
 
-    @OneToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     public Author author;
     private boolean active;
 
