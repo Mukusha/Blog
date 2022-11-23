@@ -36,4 +36,12 @@ public interface TagService {
      * @return список постов по данному тегу
      * */
     List<Post> postFindByTagId(Long id);
+
+    List<Tag> findAnalogTagByName(String name);
+
+    List<Tag> getTags();
+
+    List<Tag> setTags(List<Tag> tags);
+
+    void deleteLocTag(Tag tag);
 }

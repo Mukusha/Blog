@@ -7,15 +7,14 @@ import com.smile.blog.repositories.TagRepository;
 import com.smile.blog.services.TagService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TagServiceImpl implements TagService {
     private final TagRepository tagRepository;
     private final PostRepository postRepository;
 
+    private List<Tag> tags = new ArrayList<>();
     public TagServiceImpl(TagRepository tagRepository, PostRepository postRepository) {
         this.tagRepository = tagRepository;
         this.postRepository = postRepository;
@@ -50,5 +49,22 @@ public class TagServiceImpl implements TagService {
 
     public void addTag(String name, String shortDescription){
         tagRepository.save(new Tag(name,shortDescription));
+    }
+
+    public List<Tag> findAnalogTagByName(String name){
+        List<Tag> tags = tagRepository.findByNameContainingIgnoreCase(name);
+        return tags;
+    }
+
+    public List<Tag> getTags(){
+        return tags;
+    }
+
+    public List<Tag> setTags(List<Tag> tags){
+        return this.tags=tags;
+    }
+
+    public void deleteLocTag(Tag tag){
+         this.tags.remove(tag);
     }
 }

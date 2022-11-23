@@ -54,4 +54,6 @@ public interface PostService {
      * Сохраняет локальный post
      * */
     Post getPost();
+
+    void nullPost();
 }

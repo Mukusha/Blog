@@ -8,6 +8,15 @@
 <body>
 <header th:insert="/blocks/header :: header"></header>
 
+<style>
+.collapse {
+visibility: collapse;
+}
+.visible {
+  visibility: visible;
+}
+</style>
+
 <div class="container mt-5 mb-5">
   <h1>Добавление статьи</h1>
   <form action="/blog/addPost" method="post">
@@ -23,16 +32,42 @@
     <div class="d-flex w-100 gap-2">
       <input type="text" name="tag" placeholder="Введите тег" class="form-control" >
       <button type="submit" class="btn btn-warning">Добавить тег</button>
-    </div> <br>
+    </div>
 
-    <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+    <div th:class = "${isAddNewTag} ? visible : collapse" >
+      </br>
+    <div class="d-flex w-100 gap-2" >
+      <p > Наименование:&ensp;
+        <input class=" form-control"  name="nameTag" placeholder="Введите наименование " th:value="${nameTag}" type="text" /></p>
+      <p> Краткая информация: &ensp;
+        <input class=" form-control" name="shortDescription" placeholder="Введите краткую информацию  " type="text" /></p>
+      <button type="submit" name="action" value="addNewTag">Создать новый тег</button>
+      <button type="submit" name="action" value="cancelNewTag">Отменить</button>
+      <button type="submit" name="action" value="findNewTag">Показать похожие теги</button>
+    </div>
+    </div>
+
+    <div th:class = "${isFindTag} ? visible : collapse" >
+      <p th:if="${tags} == null">Не найдено!</p>
+      <div th:each = "tag : ${tags}"  class="d-flex w-100 gap-2"  >
+        <div th:class = "${isAddNewTag} ? visible : collapse" >
+        <h3  th:text="${tag.name}">Tag </h3>
+          <a  th:text="${tag.shortDescription}"> </a>
+          <a th:href="@{'/blog/addPost/addFindTag/' + ${tag.id}}">+</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column flex-sm-row w-100 gap-2 visible">
       <div th:each = "tag : ${post.tags}" class="alert alert-info mt-2">
         <div  th:text="'#'+${tag.name}">tag</div>
         <a th:href="@{'/blog/addPost/removeTag/' + ${tag.id}}">Delete</a>
       </div>
     </div>
 
+    </br>
     <textarea type="text" name="fullTextPost" th:text="${post.fullTextPost}" placeholder="Введите полный текст статьи" class=" form-control" ></textarea>
+    </br>
     <button type="submit" name="action" value="savePost">Добавить статью</button>
 
   </form>

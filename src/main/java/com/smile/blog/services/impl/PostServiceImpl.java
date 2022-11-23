@@ -4,7 +4,6 @@ import com.smile.blog.models.Author;
 import com.smile.blog.models.Post;
 import com.smile.blog.models.Tag;
 import com.smile.blog.repositories.PostRepository;
-import com.smile.blog.services.AuthorService;
 import com.smile.blog.services.PostService;
 import com.smile.blog.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import java.util.*;
 public class PostServiceImpl implements PostService {
     private Post post = new Post(null, null,null,null,null);
     private final PostRepository postRepository;
-  //  private final AuthorService authorService;
 
     private final TagService tagService;
 
@@ -91,5 +89,9 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post getPost() {
         return post;
+    }
+
+    public void nullPost(){
+        post=new Post(null, null,null,null,null);
     }
 }
