@@ -24,9 +24,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 //Доступ разрешен всем пользователей
-                .antMatchers("/login", "/registration").permitAll()
+                .antMatchers("/login", "/registration", "admin/**").permitAll()
                 //Все остальные страницы требуют аутентификации
                 .anyRequest().authenticated()
+                //.antMatchers("/admin/**").hasRole("Admin")
                 .and().formLogin().permitAll()
                 .and().logout().permitAll()
                 .and().httpBasic();

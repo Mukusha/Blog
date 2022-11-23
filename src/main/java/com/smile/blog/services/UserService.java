@@ -1,4 +1,5 @@
 package com.smile.blog.services;
+import com.smile.blog.models.Author;
 import com.smile.blog.models.Role;
 import com.smile.blog.models.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,4 +25,8 @@ public interface UserService extends UserDetailsService {
     * Поиск id текущего автора
     * */
     Long findAuthorIdByUsername(String name);
+
+    Iterable<User> getAllUsers();
+
+    void DeleteUser(Long userId);
 }

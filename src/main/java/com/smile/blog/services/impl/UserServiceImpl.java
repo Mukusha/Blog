@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -63,5 +62,26 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(name).getAuthor().getId();
     }
 
+    @Override
+    public Iterable<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public void DeleteUser(Long userId) {
+        var maybeUser = userRepository.findById(userId);
+        if (maybeUser.isEmpty()) return;
+        var user = maybeUser.get();
+        userRepository.delete(user);
+
+        /*
+        var author = user.getAuthor();
+        var posts = postService.getAllPostAuthor(author);
+        for (var post: posts) {
+            postService.postRemoveById(post.getId());
+        }
+        authorRepository.delete(author);
+        */
+    }
 }
 

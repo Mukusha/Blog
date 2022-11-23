@@ -1,6 +1,8 @@
 package com.smile.blog.models;
 
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,16 +13,17 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name="my_users")
+@Table(name = "my_users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue
-    private Long id;
-    private String username;
-    private String password;
+    public Long id;
+    public String username;
+    public String password;
 
     @OneToOne
-    private Author author;
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    public Author author;
     private boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
