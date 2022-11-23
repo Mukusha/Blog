@@ -16,14 +16,13 @@ import java.util.*;
 public class PostServiceImpl implements PostService {
     private Post post = new Post(null, null,null,null,null);
     private final PostRepository postRepository;
-    private final AuthorService authorService;
+  //  private final AuthorService authorService;
 
     private final TagService tagService;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository, AuthorService authorService, TagService tagService) {
+    public PostServiceImpl(PostRepository postRepository, TagService tagService) {
         this.postRepository = postRepository;
-        this.authorService = authorService;
         this.tagService = tagService;
     }
 
@@ -59,7 +58,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> getAllPostAuthor(Author author) {
-        return postRepository.findByAuthor(author);
+        return postRepository.findByAuthorOrderByIdDesc(author);
     }
 
     @Override
