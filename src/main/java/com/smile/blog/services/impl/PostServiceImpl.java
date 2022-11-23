@@ -10,10 +10,7 @@ import com.smile.blog.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -31,9 +28,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public  Iterable<Post> getAllPost()
+    public  List<Post> getAllPost()
     {
-        return postRepository.findAll();
+        return postRepository.findAllByOrderByIdDesc();
     }
 
     @Override
@@ -61,7 +58,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Iterable<Post> getAllPostAuthor(Author author) {
+    public List<Post> getAllPostAuthor(Author author) {
         return postRepository.findByAuthor(author);
     }
 

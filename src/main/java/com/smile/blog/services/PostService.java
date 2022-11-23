@@ -5,6 +5,7 @@ import com.smile.blog.models.Post;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public interface PostService {
@@ -33,7 +34,7 @@ public interface PostService {
     /**
      * Возвращает список постов автора
      * */
-    Iterable<Post> getAllPostAuthor(Author author);
+    List<Post> getAllPostAuthor(Author author);
 
     /**
      * Обновляет данные локального post
