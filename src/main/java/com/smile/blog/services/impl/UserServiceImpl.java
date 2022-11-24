@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -61,6 +60,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long findAuthorIdByUsername(String name){
         return userRepository.findByUsername(name).getAuthor().getId();
+    }
+
+    @Override
+    public Set<Role> getRolesAuthor(long id) {
+        return userRepository.findByAuthorId(id).getRoles();
     }
 
 }

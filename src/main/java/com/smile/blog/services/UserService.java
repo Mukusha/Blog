@@ -24,4 +24,6 @@ public interface UserService extends UserDetailsService {
     * Поиск id текущего автора
     * */
     Long findAuthorIdByUsername(String name);
+
+    Set<Role> getRolesAuthor(long id);
 }

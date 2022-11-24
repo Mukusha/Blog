@@ -22,27 +22,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //сконфигурировать доступность путей разным ролям, например так
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                    //Доступ разрешен всем пользователей
-                    .antMatchers("/login", "/registration").permitAll()
-                    //Все остальные страницы требуют аутентификации
-                    .anyRequest().authenticated()
-                .and()
-                    .csrf().disable() //что бы не падали Post запросы. Это связано с токенами
-                    .formLogin()
-                    .permitAll()
-                .and()
-                    .logout()
-                    .permitAll();
-     //   return http.build();
+        http.authorizeRequests()
+                //Доступ разрешен всем пользователей
+                .antMatchers("/login", "/registration").permitAll()
+                //Все остальные страницы требуют аутентификации
+                .anyRequest().authenticated()
+                .and().formLogin().permitAll()
+                .and().logout().permitAll()
+                .and().httpBasic();
+        //   return http.build();
     }
-
 
     // сохранение информации о пользователе, что бы получать её в контроллере
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance());
+        auth.userDetailsService(userService).passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 }

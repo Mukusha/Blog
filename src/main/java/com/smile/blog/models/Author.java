@@ -29,6 +29,7 @@ public class Author {
 
     public Author(String nickname) {
         this.nickname = nickname;
+        this.shortInformation = "";
         this.dateCreate  = new Timestamp(System.currentTimeMillis());
     }
     

@@ -4,36 +4,30 @@ import com.smile.blog.models.Author;
 import com.smile.blog.models.Post;
 import com.smile.blog.models.Tag;
 import com.smile.blog.repositories.PostRepository;
-import com.smile.blog.services.AuthorService;
 import com.smile.blog.services.PostService;
 import com.smile.blog.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class PostServiceImpl implements PostService {
     private Post post = new Post(null, null,null,null,null);
     private final PostRepository postRepository;
-    private final AuthorService authorService;
 
     private final TagService tagService;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository, AuthorService authorService, TagService tagService) {
+    public PostServiceImpl(PostRepository postRepository, TagService tagService) {
         this.postRepository = postRepository;
-        this.authorService = authorService;
         this.tagService = tagService;
     }
 
     @Override
-    public  Iterable<Post> getAllPost()
+    public  List<Post> getAllPost()
     {
-        return postRepository.findAll();
+        return postRepository.findAllByOrderByIdDesc();
     }
 
     @Override
@@ -61,8 +55,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Iterable<Post> getAllPostAuthor(Author author) {
-        return postRepository.findByAuthor(author);
+    public List<Post> getAllPostAuthor(Author author) {
+        return postRepository.findByAuthorOrderByIdDesc(author);
     }
 
     @Override
@@ -95,5 +89,9 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post getPost() {
         return post;
+    }
+
+    public void nullPost(){
+        post=new Post(null, null,null,null,null);
     }
 }
