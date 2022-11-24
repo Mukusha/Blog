@@ -17,9 +17,8 @@ public class Author {
     private String shortInformation;
     private Timestamp dateOfBirth;
     private Timestamp dateCreate;
-
-    public Author() {
-    }
+    
+    public Author() {}
 
     public Author(String nickname, String shortInformation, Timestamp dateOfBirth) {
         this.nickname = nickname;
@@ -30,6 +29,7 @@ public class Author {
 
     public Author(String nickname) {
         this.nickname = nickname;
+         this.shortInformation = "";
         this.dateCreate = new Timestamp(System.currentTimeMillis());
     }
 

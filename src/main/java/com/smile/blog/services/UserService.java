@@ -22,4 +22,7 @@ public interface UserService extends UserDetailsService {
     Iterable<User> getAllUsers();
 
     void DeleteUser(Long userId);
+
+    Set<Role> getRolesAuthor(long id);
+
 }

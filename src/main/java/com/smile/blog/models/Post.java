@@ -36,4 +36,10 @@ public class Post {
         this.tags = tags;
     }
 
+    public Post(Author author, String subjectPost, String anonsPost, String fullTextPost) {
+        this.author = author;
+        this.subjectPost = subjectPost;
+        this.anonsPost = anonsPost;
+        this.fullTextPost = fullTextPost;
+    }
 }

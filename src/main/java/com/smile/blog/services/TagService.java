@@ -1,6 +1,9 @@
 package com.smile.blog.services;
 
+import com.smile.blog.models.Post;
 import com.smile.blog.models.Tag;
+
+import java.util.List;
 
 public interface TagService {
     /**
@@ -26,4 +29,19 @@ public interface TagService {
      * @param shortDescription - краткое описание тега
      * */
     void addTag(String name, String shortDescription);
+
+    /**
+     * Поиск постов по тегу
+     * @param id - id тега
+     * @return список постов по данному тегу
+     * */
+    List<Post> postFindByTagId(Long id);
+
+    List<Tag> findAnalogTagByName(String name);
+
+    List<Tag> getTags();
+
+    List<Tag> setTags(List<Tag> tags);
+
+    void deleteLocTag(Tag tag);
 }
