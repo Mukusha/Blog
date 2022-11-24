@@ -4,7 +4,7 @@ values (1, 'admin','control', '1988-12-22 00:00:00', '2015-06-07 10:01:10'),
        (3, 'profileAuthor','','1995-01-24 00:00:00','2020-12-09 10:01:10'),
        (4, 'profileUserNotPost','','2001-05-14 00:00:00','2021-11-19 10:01:10');
 
-insert into my_users (id, active, username, password, author_id)
+insert into users (id, active, username, password, author_id)
 values (1, true, 'admin', 'password', 1),
        (2,true, 'ad', '123',2 ),
        (3,true, 'q', '1',3 ),
