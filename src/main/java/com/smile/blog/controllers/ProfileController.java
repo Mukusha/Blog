@@ -1,6 +1,7 @@
 package com.smile.blog.controllers;
 
 import com.smile.blog.models.Author;
+import com.smile.blog.models.Role;
 import com.smile.blog.models.User;
 import com.smile.blog.services.AuthorService;
 import com.smile.blog.services.PostService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 @Controller
 public class ProfileController {
@@ -29,12 +31,16 @@ public class ProfileController {
     }
 
     @GetMapping("/blog/profile/{id}")
-    public  String profileDetails(@PathVariable(value = "id") long id,Model model){
-        //! кнопка редактировать появляется только для хозяина страницы
+    public  String profileDetails(@AuthenticationPrincipal User user,
+                                  @PathVariable(value = "id") long id,Model model){
         Author author = authorService.findAuthorById(id);
         model.addAttribute("author", author);
         model.addAttribute("age", author.getAge());
         model.addAttribute("posts", postService.getAllPostAuthor(author));
+        //своя ли страница не своя не даем перейти на страницу редактирования
+        if(user.getAuthor().getId() != id) model.addAttribute("my", false);
+        else model.addAttribute("my", true);
+        if(userService.getRolesAuthor(id).contains(Role.ADMIN)) model.addAttribute("isAdmin", true);
         return "profileDetails";
     }
 
@@ -45,12 +51,9 @@ public class ProfileController {
         model.addAttribute("author", author);
         model.addAttribute("age", author.getAge());
         model.addAttribute("posts", postService.getAllPostAuthor(author));
-        return "profileDetails";
-    }
-
-    @PostMapping("/blog/profile/{id}")
-    public String profileDetailsPost(@PathVariable(value = "id") long id, Model model){
-        //обработка кнопок редактировать и удалить страницу
+        model.addAttribute("posts", postService.getAllPostAuthor(author));
+        model.addAttribute("my", true);
+        if(userService.getRolesAuthor(author.getId()).contains(Role.ADMIN)) model.addAttribute("isAdmin", true);
         return "profileDetails";
     }
 
@@ -59,14 +62,11 @@ public class ProfileController {
             @AuthenticationPrincipal User user,
             @PathVariable(value = "id") long id,Model model){
         // доступ имеет только автор страницы
-        if(user.getAuthor().getId() != id)
-        {
-            System.out.println("вы не хозяин страницы");
-            return "redirect:/blog/profile/"+id;} //не даем перейти на страницу редактирования
-        //
+        if(user.getAuthor().getId() != id) return "redirect:/blog/profile/"+id;
         Author author = authorService.findAuthorById(id);
         model.addAttribute("author", author);
-        model.addAttribute("age", author.getDateOfBirth());
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(author.getDateOfBirth());
+        model.addAttribute("dateOfBirth", date);
         return "profileDetailsEdit";
     }
 

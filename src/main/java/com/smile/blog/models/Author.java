@@ -21,21 +21,23 @@ public class Author {
 
     public Author() {}
 
-    public Author(String fioAuthor, String nickname, String shortInformation, Timestamp dateOfBirth) {
+ /*   public Author( String nickname, String shortInformation, Timestamp dateOfBirth) {
+        this.nickname = nickname;
+        this.shortInformation = shortInformation;
+        this.dateOfBirth = dateOfBirth;
+
+    }
+*/
+    public Author(String nickname, String shortInformation,Timestamp dateOfBirth) {
         this.nickname = nickname;
         this.shortInformation = shortInformation;
         this.dateOfBirth = dateOfBirth;
         this.dateCreate  = new Timestamp(System.currentTimeMillis());
     }
 
-    public Author(String nickname, String shortInformation,Timestamp dateOfBirth) {
-        this.nickname = nickname;
-        this.shortInformation = shortInformation;
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public Author(String nickname) {
         this.nickname = nickname;
+        this.shortInformation = "";
         this.dateCreate  = new Timestamp(System.currentTimeMillis());
     }
     
