@@ -23,12 +23,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                //Доступ разрешен всем пользователей
-                .antMatchers("/login", "/registration").permitAll()
-                //Все остальные страницы требуют аутентификации
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/registration").not().authenticated()
                 .anyRequest().authenticated()
-                .and().formLogin().permitAll()
-                .and().logout().permitAll()
+                .and()
+                .formLogin()
+                .defaultSuccessUrl("/blog")
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll()
+                .logoutSuccessUrl("/login")
                 .and().httpBasic();
         //   return http.build();
     }

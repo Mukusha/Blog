@@ -1,8 +1,9 @@
 package com.smile.blog.models;
 
 
-
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -14,8 +15,8 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(fetch = FetchType.EAGER)
-   // @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id")
     private Author author;
     private String subjectPost;
     private String anonsPost;
@@ -24,7 +25,9 @@ public class Post {
     @ManyToMany
     private Set<Tag> tags;
 
-    public Post() {}
+    public Post() {
+    }
+
     public Post(Author author, String subjectPost, String anonsPost, String fullTextPost, Set<Tag> tags) {
         this.author = author;
         this.subjectPost = subjectPost;
