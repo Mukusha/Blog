@@ -64,6 +64,7 @@ public class UserServiceImpl implements UserService {
         if (maybeUser.isEmpty()) return;
         var user = maybeUser.get();
         userRepository.delete(user);
+
     }
 
     public Set<Role> getRolesAuthor(long id) {

@@ -15,7 +15,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne//(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
     private Author author;
     private String subjectPost;
@@ -41,5 +41,9 @@ public class Post {
         this.subjectPost = subjectPost;
         this.anonsPost = anonsPost;
         this.fullTextPost = fullTextPost;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 }

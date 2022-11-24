@@ -120,8 +120,7 @@ public class PostController {
                               @RequestParam String fullTextPost,
                               @RequestParam String tag,
                               @RequestParam String nameTag,
-                              @RequestParam String shortDescription,
-                              @RequestParam(required=false) String nfTagName, Model model){
+                              @RequestParam String shortDescription, Model model){
 
         postService.blogPostUpdate( subjectPost,   anonsPost,   fullTextPost,  tag);
 

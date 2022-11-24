@@ -19,7 +19,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.userService = userService;
     }
 
-    //сконфигурировать доступность путей разным ролям, например так
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -35,10 +34,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .logoutSuccessUrl("/login")
                 .and().httpBasic();
-        //   return http.build();
     }
 
-    // сохранение информации о пользователе, что бы получать её в контроллере
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(NoOpPasswordEncoder.getInstance());
