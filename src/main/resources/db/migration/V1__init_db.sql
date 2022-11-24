@@ -15,7 +15,7 @@ create table users
     active    boolean      not null,
     username  varchar(255) not null,
     password  varchar(255) not null,
-    author_id int8 references authors
+    author_id int8 references authors on delete cascade
 );
 
 create table posts
@@ -36,7 +36,7 @@ create table tags
 
 create table posts_tags
 (
-    post_id int8 references posts,
+    post_id int8 references posts on delete cascade,
     tags_id int8 references tags
 );
 

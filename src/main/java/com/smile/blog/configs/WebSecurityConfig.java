@@ -35,7 +35,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .logoutSuccessUrl("/login")
                 .and().httpBasic();
-        //   return http.build();
     }
 
     // сохранение информации о пользователе, что бы получать её в контроллере

@@ -23,8 +23,9 @@ public class AdminController {
     }
 
     @PostMapping("/admin/users/{userId}/delete")
-    public String adminDeleteUser(@PathVariable(value = "userId") Long userId){
+    public String adminDeleteUser(@PathVariable(value = "userId") Long userId, Model model){
         userService.DeleteUser(userId);
-        return "redirect:/admin/users";
+        model.addAttribute("allUsers", userService.getAllUsers());
+        return "adminUsers";
     }
 }
