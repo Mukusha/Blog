@@ -27,13 +27,13 @@
                     <div class="panel-body">
                         <div class="text-center" id="author">
                             <img th:if="!${isAdmin}" src="https://as2.ftcdn.net/v2/jpg/05/12/42/23/1000_F_512422332_77qK2kTzFe3ReMWi9EPBUKUr7LCQtLy1.jpg" width="150" height="161" alt="Пользователь">
-                            <img th:if="${isAdmin}" src="https://img.freepik.com/free-vector/coding-concept-illustration_114360-1155.jpg?w=740&t=st=1669228816~exp=1669229416~hmac=8342cedd47daa0f9f662f8f791c80873537e252d0694728a3527c972b57db879" width="150" height="150">
+                            <img th:if="${isPageAdmin}" src="https://img.freepik.com/free-vector/coding-concept-illustration_114360-1155.jpg?w=740&t=st=1669228816~exp=1669229416~hmac=8342cedd47daa0f9f662f8f791c80873537e252d0694728a3527c972b57db879" width="150" height="150">
                             <h3  th:text="${author.nickname}"></h3>
                             <p th:text="${author.shortInformation}"></p>
                         </div>
                     </div>
                 </div>
-                <a th:if="${isAdmin && my}" href="/admin/users">Проверка пользователей</ya-tr-span></a>
+                <a th:if="${isAdmin}" href="/admin/users">Проверка пользователей</ya-tr-span></a>
             </div>
             <div class="col-lg-8 col-md-8 col-xs-12">
                 <div class="panel">

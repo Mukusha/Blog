@@ -16,7 +16,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne//(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "author_id")
+   // @JoinColumn(name = "author_id")
     private Author author;
     private String subjectPost;
     private String anonsPost;

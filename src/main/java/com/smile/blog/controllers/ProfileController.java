@@ -38,14 +38,16 @@ public class ProfileController {
         model.addAttribute("age", author.getAge());
         model.addAttribute("posts", postService.getAllPostAuthor(author));
         //своя ли страница не своя не даем перейти на страницу редактирования
-        if(user.getAuthor().getId() != id) model.addAttribute("my", false);
-        else model.addAttribute("my", true);
-        if(userService.getRolesAuthor(id).contains(Role.ADMIN)) model.addAttribute("isAdmin", true);
+        if(user.getAuthor().getId() == id) {
+            model.addAttribute("my", true);
+            if(user.getRoles().contains(Role.ADMIN))  model.addAttribute("isAdmin", true);}
+        else model.addAttribute("my", false);
+        if(userService.getRolesAuthor(id).contains(Role.ADMIN)) model.addAttribute("isPageAdmin", true);
         return "profileDetails";
     }
 
     @GetMapping("/profile/{name}")
-    public  String profileDetailsByUserName(@PathVariable(value = "name") String name,Model model){
+    public  String profileDetailsByUserName(@AuthenticationPrincipal User user, @PathVariable(value = "name") String name,Model model){
         //! кнопка редактировать появляется только для хозяина страницы
         Author author = authorService.findAuthorById(userService.findAuthorIdByUsername(name));
         model.addAttribute("author", author);
@@ -53,7 +55,9 @@ public class ProfileController {
         model.addAttribute("posts", postService.getAllPostAuthor(author));
         model.addAttribute("posts", postService.getAllPostAuthor(author));
         model.addAttribute("my", true);
-        if(userService.getRolesAuthor(author.getId()).contains(Role.ADMIN)) model.addAttribute("isAdmin", true);
+        if(user.getRoles().contains(Role.ADMIN)) { model.addAttribute("isAdmin", true);
+            model.addAttribute("isPageAdmin", true);
+        }
         return "profileDetails";
     }
 
