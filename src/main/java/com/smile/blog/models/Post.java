@@ -42,4 +42,8 @@ public class Post {
         this.anonsPost = anonsPost;
         this.fullTextPost = fullTextPost;
     }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
 }
