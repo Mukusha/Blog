@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "my_users")
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue
