@@ -47,22 +47,53 @@ public class PostController {
     }
 
     @GetMapping("/blog/{id}/editPost")
-    public  String blogEdit(@PathVariable(value = "id") long id, Model model){
+    public  String postEditGet(@PathVariable(value = "id") long id, Model model){
         postService.findPostById(id);
         model.addAttribute("post", postService.getPost());
+        model.addAttribute("isAddNewTag", false);
         return "postEdit";
     }
 
-    @GetMapping("/blog/{id}/editPost/tag")
-    public  String blogEditTag(Model model){
-        model.addAttribute("post", postService.getPost());
-        return "postEdit";
-    }
+    @PostMapping("/blog/{id}/editPost")
+    public String postEditPost(
+            @RequestParam(value="action", required=false) String action,
+            @RequestParam String subjectPost,
+            @RequestParam String anonsPost,
+            @RequestParam String fullTextPost,
+            @RequestParam String tag,
+            @RequestParam String nameTag,
+            @RequestParam String shortDescription,
+            @RequestParam(required=false) String nfTagName, Model model){
 
-    @PostMapping("/blog/{id}/editPost/tag")
-    public String blogPostUpdateTag(@RequestParam(value="action", required=false) String action, @RequestParam String subjectPost, @RequestParam String anonsPost, @RequestParam String fullTextPost,@RequestParam String tag, Model model){
         postService.blogPostUpdate( subjectPost,   anonsPost,   fullTextPost,  tag);
+
         model.addAttribute("post", postService.getPost());
+        model.addAttribute("isAddNewTag", false);
+
+        if (tagService.findTagByName(tag)==null) {
+            model.addAttribute("isAddNewTag",true);
+            model.addAttribute("nameTag",tag);
+        }
+
+        if (action!=null && action.equals("addNewTag")) {
+            tagService.addTag(nameTag,shortDescription);
+            postService.blogPostUpdate(subjectPost,   anonsPost,   fullTextPost,nameTag);
+            model.addAttribute("isAddNewTag",false);
+            return "postEdit";
+        }
+
+        if (action!=null && action.equals("cancelNewTag")) {
+            model.addAttribute("isAddNewTag",false);
+            return "postEdit";
+        }
+
+        if (action!=null && action.equals("findNewTag")) {
+            model.addAttribute("nameTag",nameTag);
+            model.addAttribute("isFindTag",true);
+            model.addAttribute("tags",tagService.findAnalogTagByName(nameTag));
+            tagService.setTags( tagService.findAnalogTagByName(nameTag));
+            return "postEdit";
+        }
 
         if (action!=null && action.equals("update")) {
             postService.saveAndResetPost();
@@ -148,7 +179,6 @@ public class PostController {
         tags.add(tagService.findTagById(id));
         postService.getPost().setTags(tags);
         model.addAttribute("post", postService.getPost());
-        System.out.println(tagService.getTags().size());
         if (tagService.getTags().size()==0){
             model.addAttribute("isAddNewTag", false);
             model.addAttribute("isFindTag", false);
@@ -161,8 +191,10 @@ public class PostController {
         return "postAdd";
     }
     @GetMapping("/blog/editPost/removeTag/{idTag}")
-    public String deleteTagInEditPostById(@PathVariable(value = "idTag") long id){
+    public String deleteTagInEditPostById(@PathVariable(value = "idTag") long id, Model model){
         postService.getPost().getTags().remove(tagService.findTagById(id));
-        return "redirect:/blog/"+ postService.getPost().getId()+ "/editPost/tag";
+        model.addAttribute("post", postService.getPost());
+        model.addAttribute("isAddNewTag", false);
+        return "postEdit";
     }
 }

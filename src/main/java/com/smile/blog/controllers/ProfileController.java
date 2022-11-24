@@ -33,7 +33,6 @@ public class ProfileController {
     @GetMapping("/blog/profile/{id}")
     public  String profileDetails(@AuthenticationPrincipal User user,
                                   @PathVariable(value = "id") long id,Model model){
-        //! кнопка редактировать появляется только для хозяина страницы
         Author author = authorService.findAuthorById(id);
         model.addAttribute("author", author);
         model.addAttribute("age", author.getAge());
