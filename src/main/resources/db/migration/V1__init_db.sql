@@ -1,4 +1,4 @@
-create sequence hibernate_sequence start 4 increment 1;
+create sequence hibernate_sequence start 2 increment 1;
 
 create table authors
 (
@@ -42,6 +42,6 @@ create table posts_tags
 
 create table user_role
 (
-    user_id int8 references users not null,
+    user_id int8 references users on delete cascade,
     roles   varchar(255)
 );
