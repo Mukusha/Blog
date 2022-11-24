@@ -21,7 +21,7 @@ public class User implements UserDetails {
     public String username;
     public String password;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     public Author author;
     private boolean active;
