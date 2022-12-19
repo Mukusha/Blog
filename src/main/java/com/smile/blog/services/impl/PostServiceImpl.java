@@ -78,6 +78,12 @@ public class PostServiceImpl implements PostService {
     public void postRemoveById(Long id){
         Post post=postRepository.findById(id).orElseThrow();
         postRepository.delete(post);
+
+      /*  var myPost = postRepository.findById(id);
+        if (myPost.isEmpty()) return;
+        var user = myPost.get();
+        postRepository.delete(post);*/
+
     }
 
     @Override
