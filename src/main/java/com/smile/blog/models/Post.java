@@ -2,8 +2,6 @@ package com.smile.blog.models;
 
 
 import lombok.Data;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -15,7 +13,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER) //, cascade = CascadeType.REMOVE
     @JoinColumn(name = "author_id")
     private Author author;
     private String subjectPost;
