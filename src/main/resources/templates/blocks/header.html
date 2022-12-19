@@ -6,7 +6,9 @@
     </a>
 
     <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-      <a class="me-3 py-2 text-dark text-decoration-none" href="/logout">Выйти</ya-tr-span></a>
+      <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Выйти"/>
+      </form>
       <a class="me-3 py-2 text-dark text-decoration-none" th:href="'/profile/'+${#httpServletRequest.remoteUser}"> Профиль </ya-tr-span></a>
       <a class="me-3 py-2 text-dark text-decoration-none" href="/blog">Главная</ya-tr-span></a>
       <a class="me-3 py-2 text-dark text-decoration-none" href="/blog/addPost"> Добавить пост</ya-tr-span></a>
