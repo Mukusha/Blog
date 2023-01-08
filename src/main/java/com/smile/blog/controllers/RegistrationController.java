@@ -16,15 +16,12 @@ public class RegistrationController {
     public RegistrationController( UserService userService)
     { this.userService = userService;}
 
-    //будет возвращать форму регистрации
     @GetMapping("/registration")
     public String registration()
     {
         return "registration";
     }
 
-    //для сохранения формы регистрации
-    //сделать связь с таблицей авторов
     @PostMapping("/registration")
     public String adduser(User user, Model model)
     {
@@ -35,7 +32,7 @@ public class RegistrationController {
         }
         catch (Exception ex)
         {
-            model.addAttribute("message", "User exists");
+            model.addAttribute("message", "Данный логин уже занят ");
             return "registration";
         }
     }

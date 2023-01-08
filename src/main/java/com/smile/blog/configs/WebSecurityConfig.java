@@ -23,18 +23,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/registration").not().authenticated()
-                .anyRequest().authenticated()
+                    .antMatchers("/admin/**").hasRole("ADMIN")
+                    .antMatchers("/registration").not().authenticated()
+                    .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .defaultSuccessUrl("/blog")
-                .permitAll()
+                    .formLogin()
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/blog")
+                    .permitAll()
                 .and()
-                .logout()
-                .permitAll()
-                .logoutSuccessUrl("/login")
-                .and().httpBasic();
+                    .logout()
+                    .logoutSuccessUrl("/login")
+                    .permitAll()
+                .and()
+                    .httpBasic();
     }
 
     // сохранение информации о пользователе, что бы получать её в контроллере

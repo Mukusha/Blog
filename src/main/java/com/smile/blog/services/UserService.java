@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.List;
 import java.util.Set;
 
 public interface UserService extends UserDetailsService {
@@ -28,4 +29,7 @@ public interface UserService extends UserDetailsService {
 
     Set<Role> getRolesAuthor(long id);
 
+    List<Boolean> getDisabletList(long index);
+
+    void editRoleUser(Long userId, Boolean admin, Boolean user) throws Exception;
 }

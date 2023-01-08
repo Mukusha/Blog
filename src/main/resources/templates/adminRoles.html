@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+  <style>
+        table {
+            margin-bottom: 20px;
+            border: 1px solid #dddddd;
+            border-collapse: collapse;
+        }
+
+        th {
+            font-weight: bold;
+            padding: 5px;
+            background: #efefef;
+            border: 1px solid #dddddd;
+        }
+
+        td {
+            border: 1px solid #dddddd;
+            padding: 5px;
+        }
+    </style>
+  <title>"Назначение ролей"</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+<div>
+
+  <table>
+    <thead>
+    <th>Nickname</th>
+    <th colspan="2"  style="text-align:center">Roles</th>
+    <tr>
+      <th>&nbsp;</th>
+      <th>User</th>
+      <th>Admin</th>
+    </thead>
+    </tr>
+
+
+
+    <tr th:each="user, iterStat  : ${allUsers}">
+      <form th:action="'/admin/roles/'+${user.id}+'/save'" method="post">
+      <td th:text="${user.author.nickname}"></td>
+          <td th:each="role : ${roles}" >
+            <div>
+              <input type="checkbox" th:name="${role}" th:checked="${#lists.contains(user.roles, role)}" th:disabled = "${noDisablet.get(iterStat.index)}" style="text-align:center">
+            </div>
+          </td>
+      <td>
+
+
+          <fieldset>
+            <input type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}"/>
+          </fieldset>
+          <button th:if="${!noDisablet.get(iterStat.index)}" type="submit">Сохранить</button>
+        </form>
+
+        <form th:action="'/admin/roles/'+${user.id}+'/edit'" method="post">
+          <fieldset>
+            <input type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}"/>
+          </fieldset>
+          <button th:if="${noDisablet.get(iterStat.index)}" type="submit">Изменить</button>
+        </form>
+
+
+
+      </td>
+    </tr>
+
+  </table>
+
+  <a href="/profileXZ">Профиль</a>
+  <a href="/blog">Главная</a>
+</div>
+</body>
+</html>

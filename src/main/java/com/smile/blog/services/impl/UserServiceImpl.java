@@ -11,10 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 
 @Component
@@ -40,7 +37,6 @@ public class UserServiceImpl implements UserService {
         if (userFromDb != null) {
             throw new Exception("user exist");
         }
-
         user.setRoles(Collections.singleton(Role.USER));
         user.setActive(true);
         Author author = authorService.profileAdd(user.getUsername());
@@ -70,6 +66,41 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByAuthorId(id).getRoles();
     }
 
+  /*  public Map<Long, Set<Role>> allUsersAndRole(){
+        Map<Long, Set<Role>> allUsers= new LinkedHashMap<Long, Set<Role>>();
+        for (User user: userRepository.findAll()) {
+            allUsers.put(user.getId(),user.getRoles());
+        }
+        return allUsers;
+    }*/
 
+    public List<Boolean> getDisabletList(long index){
+        List<Boolean> disabletUserList= new ArrayList<>();
+        Iterable<User> listUser = userRepository.findAll();
+        for (User user:listUser) {
+            if(user.getId() == index && index!=-1) disabletUserList.add(false);
+            else disabletUserList.add(true);
+        }
+      //  System.out.println(disabletUserList);
+        return disabletUserList;
+    }
+
+    public void editRoleUser(Long userId, Boolean admin, Boolean user) throws Exception {
+        if(!userRepository.existsById(userId)){
+           // throw new Exception("user does not exist");
+            System.out.println("Пользователя не существует!!!");
+            return;
+        }
+
+        Set<Role> roles = new HashSet<>();
+        if (admin != null && user !=null) { roles.add(Role.USER); roles.add(Role.ADMIN);}
+        if (admin != null && user ==null) roles.add(Role.ADMIN);
+        if (admin == null && user !=null) roles.add(Role.USER);
+        if (admin == null && user ==null) { System.out.println("Пользователь не может быть без ролей!!!"); return;}
+        Optional<User> users = userRepository.findById(userId);
+        User userNew = users.get();
+        userNew.setRoles(roles);
+        userRepository.save(userNew);
+    }
 }
 
