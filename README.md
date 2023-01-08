@@ -23,27 +23,30 @@
 
 **Скриншоты приложения**
 
+Сначала надо авторизоваться на сайте или зарегистрироваться на сайте:
+<p align="center" > <img  src="./assets_README/login.PNG" width="30%">  <img  src="./assets_README/registration.PNG" width="30%"> </p>
+
 На главной странице находтся список всех постов
-<p align="center"><img  src="./assets_README/home.PNG" width="90%"></p>
+<p align="center"><img  src="./assets_README/home.PNG" width="70%"></p>
 
 Нажав "детальнее" можно открыть полную информацию о любом посте. Например :
-<p align="center"><img  src="./assets_README/post_2.PNG" width="90%"></p>
+<p align="center"><img  src="./assets_README/post_2.PNG" width="70%"></p>
 
 Любой пост можно редактировать. Добавление поста выглядит аналогичным образом.
-<p align="center"><img  src="./assets_README/post_2_edit.PNG" width="90%"></p>
+<p align="center"><img  src="./assets_README/post_2_edit.PNG" width="70%"></p>
 
 Всегда можно посмотреть свой профиль нажав по кнопке в верхнем правом углу экрана:
 
-<p align="center"> <img  src="./assets_README/profileUser.PNG" width="40%">  <img  src="./assets_README/profileADMIN.PNG" width="40%"> </p>
+<p > <img  src="./assets_README/profileUser.PNG" width="40%">  <img  src="./assets_README/profileAdmin.PNG" width="50%"> </p>
 
 Есть возможность редактировать свою страницу:
-<p align="center"><img  src="./assets_README/profileEdit.PNG" width="90%"></p>
+<p align="center"><img  src="./assets_README/profileEdit.PNG" width="60%"></p>
 
 Можно посмотреть список публикаций по определенному тегу:
-<p align="center"><img  src="./assets_README/listTag.PNG" width="90%"></p>
+<p align="center"><img  src="./assets_README/listTag.PNG" width="60%"></p>
 
 ADMIN может удалять пользователей и редактировать права пользователей:
-<p align="center"> <img  src="./assets_README/deleteUser.PNG" width="40%">  <img  src="./assets_README/editRole.PNG" width="40%"> </p>
+<p align="center"> <img  src="./assets_README/deleteUser.PNG" width="30%">  <img  src="./assets_README/editRole.PNG" width="30%"> </p>
 
 **Итоги:**
 Все задачи которые ставились проекту для прохождения обучающего курса выполнены.
