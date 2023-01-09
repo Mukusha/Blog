@@ -19,10 +19,10 @@ body {
     <h1>Блог сайта</h1>
     <div th:each = "el : ${post}" class="alert alert-info mt-2">
 
-        <a style="float: right" th:href="'/blog/profile/'+${el.Author.id}" th:text="${el.Author.nickname}">Автор</a>
+        <a style="float: right" th:href="'/blog/profile/'+${el.Author.id}" th:text="${el.Author.nickname}"  th:title ="${el.Author.shortInformation}">Автор</a>
         <h3 th:text="${el.subjectPost}"/>
         <div th:each = "tag : ${el.tags}">
-            <a style="float: right"  th:href="'/blog/tag/'+${tag.id}" th:text="'#'+${tag.name}">тег</a>
+            <a style="float: right"  th:href="'/blog/tag/'+${tag.id}" th:text="'#'+${tag.name}" th:title ="${tag.shortDescription}">тег</a>
         </div>
         <p th:text="${el.fullTextPost}"/>
         <a  th:if="${isAuthor}" th:href="'/blog/'+${el.id}+'/editPost'" class="btn btn-warning">Редактировать</a> <br><br>

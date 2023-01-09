@@ -37,7 +37,7 @@
         <tr th:each="user : ${allUsers}">
             <td th:text="${user.id}"></td>
             <td th:text="${user.author.id}"></td>
-            <td th:text="${user.author.nickname}"></td>
+            <td th:text="${user.author.nickname}" th:title = "${user.author.shortInformation}"></td>
             <td>
                 <div th:each="role : ${user.getRoles()}">
                     <div style="float: right" th:text="${role}"></div>
@@ -50,11 +50,12 @@
                                th:name="${_csrf.parameterName}"
                                th:value="${_csrf.token}"/>
                     </fieldset>
-                    <button type="submit">Delete</button>
+                    <button type="submit">Удалить</button>
                 </form>
             </td>
         </tr>
     </table>
+    <a th:href="'/profile/'+${#httpServletRequest.remoteUser}">Профиль</a>
     <a href="/blog">Главная</a>
 </div>
 </body>

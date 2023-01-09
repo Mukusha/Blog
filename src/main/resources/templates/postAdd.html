@@ -56,8 +56,7 @@ visibility: collapse;
       <p th:if="${tags} == null">Не найдено!</p>
       <div th:each = "tag : ${tags}"  class="d-flex w-100 gap-2"  >
         <div th:class = "${isAddNewTag} ? visible : collapse" >
-        <h3  th:text="${tag.name}">Tag </h3>
-          <a  th:text="${tag.shortDescription}"> </a>
+        <h3  th:text="${tag.name}" th:title ="${tag.shortDescription}">Tag </h3>
           <a th:href="@{'/blog/addPost/addFindTag/' + ${tag.id}}">+</a>
         </div>
       </div>
@@ -65,7 +64,7 @@ visibility: collapse;
 
     <div class="d-flex flex-column flex-sm-row w-100 gap-2 visible">
       <div th:each = "tag : ${post.tags}" class="alert alert-info mt-2">
-        <div  th:text="'#'+${tag.name}">tag</div>
+        <div  th:text="'#'+${tag.name} " th:title ="${tag.shortDescription}">tag</div>
         <a th:href="@{'/blog/addPost/removeTag/' + ${tag.id}}">Delete</a>
       </div>
     </div>

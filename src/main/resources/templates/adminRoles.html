@@ -43,7 +43,7 @@
 
     <tr th:each="user, iterStat  : ${allUsers}">
       <form th:action="'/admin/roles/'+${user.id}+'/save'" method="post">
-      <td th:text="${user.author.nickname}"></td>
+      <td th:title = "${user.author.shortInformation}"  th:text="${user.author.nickname}"></td>
           <td th:each="role : ${roles}" >
             <div>
               <input type="checkbox" th:name="${role}" th:checked="${#lists.contains(user.roles, role)}" th:disabled = "${noDisablet.get(iterStat.index)}" style="text-align:center">
@@ -76,7 +76,7 @@
 
   </table>
 
-  <a href="/profileXZ">Профиль</a>
+  <a th:href="'/profile/'+${#httpServletRequest.remoteUser}">Профиль</a>
   <a href="/blog">Главная</a>
 </div>
 </body>

@@ -28,7 +28,7 @@ body {
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
           </fieldset>
           <input  name="key" placeholder="Введите ключевые слова " type="text" />
-          <button type="submit" class="btn search-btn">Поиск</button>
+          <button type="submit" class="btn search-btn" title="Поиск осуществляется только по теме и анонсу">Поиск</button>
           </br>
           <a th:href="'/blog/find'">Расширенный поиск</a>
         </form>
@@ -36,13 +36,13 @@ body {
   </div>
 
   <div th:each = "el : ${posts}" class="alert alert-info mt-2">
-    <a style="float: right" th:href="'/blog/profile/'+${el.Author.id}" th:text="${el.Author.nickname}">Автор</a>
+    <a style="float: right" th:href="'/blog/profile/'+${el.Author.id}" th:text="${el.Author.nickname}" th:title ="${el.Author.shortInformation}" >Автор</a>
     <h3 th:text="${el.subjectPost}"/>
     <div th:each = "tag : ${el.tags}">
-      <a style="float: right"  th:href="'/blog/tag/'+${tag.id}" th:text="'#'+${tag.name}">тег</a>
+      <a style="float: right"  th:href="'/blog/tag/'+${tag.id}" th:text="'#'+${tag.name}" th:title ="${tag.shortDescription}">тег</a>
     </div>
     <p th:text="${el.anonsPost}" />
-    <a th:href="'/blog/'+${el.id}" class="btn btn-warning">Детальнее</a>
+    <a th:href="'/blog/'+${el.id}" class="btn btn-warning" title="Посмотреть полный текст">Детальнее</a>
   </div>
 </div>
 

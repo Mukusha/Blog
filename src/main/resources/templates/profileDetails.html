@@ -61,7 +61,7 @@ body {
                                     <div style="float: right" th:text="${el.Author.nickname}">Автор</div>
                                     <h3 th:text="${el.subjectPost}"/>
                                     <div th:each = "tag : ${el.tags}">
-                                        <a style="float: right"  th:href="'/blog/tag/'+${tag.id}" th:text="'#'+${tag.name}">тег</a>
+                                        <a style="float: right"  th:href="'/blog/tag/'+${tag.id}" th:text="'#'+${tag.name}" th:title ="${tag.shortDescription}">тег</a>
                                     </div>
                                     <p th:text="${el.anonsPost}" />
                                     <a th:href="'/blog/'+${el.id}" class="btn btn-warning">Детальнее</a>
