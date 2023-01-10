@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -67,20 +69,26 @@ public class ProfileController {
             @PathVariable(value = "id") long id,Model model){
         // доступ имеет только автор страницы
         if(user.getAuthor().getId() != id) return "redirect:/blog/profile/"+id;
+
         Author author = authorService.findAuthorById(id);
         model.addAttribute("author", author);
         String date = new SimpleDateFormat("yyyy-MM-dd").format(author.getDateOfBirth());
         model.addAttribute("dateOfBirth", date);
+        if(user.getRoles().contains(Role.ADMIN)) { model.addAttribute("isAdmin", true);
+            model.addAttribute("isPageAdmin", true);
+        }
         return "profileDetailsEdit";
     }
 
     @PostMapping("/blog/profile/{id}/edit")
     public String profileEditSave(
+            @RequestParam("file") MultipartFile file,
             @PathVariable(value = "id") long id,
             @RequestParam String nickname,
             @RequestParam String shortInformation,
-            @RequestParam String dateOfBirth, Model model) throws ParseException {
-        authorService.AuthorSaveUpdate(id, nickname,   shortInformation, dateOfBirth);
+            @RequestParam String dateOfBirth, Model model) throws ParseException, IOException {
+
+        authorService.AuthorSaveUpdate(id, nickname,   shortInformation, dateOfBirth, file);
         model.addAttribute("author", authorService.findAuthorById(id));
         return "redirect:/blog/profile/"+id; //возвращаемся на страницу отредактированного профиля
     }

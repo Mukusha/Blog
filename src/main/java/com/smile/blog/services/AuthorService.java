@@ -2,7 +2,9 @@ package com.smile.blog.services;
 
 import com.smile.blog.models.Author;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.text.ParseException;
 
 @Component
@@ -29,5 +31,8 @@ public interface AuthorService {
      * Сохранить изменения в профиле
      * @param nickname - ник пользователя
      * */
-    void AuthorSaveUpdate(Long id, String nickname,String shortInformation,  String dateOfBirth) throws ParseException;
+     void AuthorSaveUpdate(Long id, String nickname, String shortInformation, String dateOfBirth, MultipartFile file) throws IOException, ParseException ;
+
+        //   void AuthorSaveUpdate(Long id, String nickname,String shortInformation,  String dateOfBirth) throws ParseException;
+
 }

@@ -16,8 +16,9 @@ public class Author {
     private String nickname;
     private String shortInformation;
     private Timestamp dateOfBirth;
-    private Timestamp dateCreate;
-    
+    private Timestamp dateCreate; //  иконка профиля
+
+    private String filenameImage;
     public Author() {}
 
     public Author(String nickname, String shortInformation, Timestamp dateOfBirth) {
