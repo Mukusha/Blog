@@ -49,7 +49,9 @@ public class ProfileController {
     }
 
     @GetMapping("/profile/{name}")
-    public  String profileDetailsByUserName(@AuthenticationPrincipal User user,@PathVariable(value = "name") String name,Model model){
+    public  String profileDetailsByUserName(@AuthenticationPrincipal User user,
+                                            @PathVariable(value = "name") String name,
+                                            Model model){
         //! кнопка редактировать появляется только для хозяина страницы
         Author author = authorService.findAuthorById(userService.findAuthorIdByUsername(name));
         model.addAttribute("author", author);
@@ -66,7 +68,8 @@ public class ProfileController {
     @GetMapping("/blog/profile/{id}/edit")
     public  String profileEdit(
             @AuthenticationPrincipal User user,
-            @PathVariable(value = "id") long id,Model model){
+            @PathVariable(value = "id") long id,
+            Model model){
         // доступ имеет только автор страницы
         if(user.getAuthor().getId() != id) return "redirect:/blog/profile/"+id;
 
@@ -82,7 +85,7 @@ public class ProfileController {
 
     @PostMapping("/blog/profile/{id}/edit")
     public String profileEditSave(
-            @RequestParam("file") MultipartFile file,
+            @RequestParam(name="file", required=false) MultipartFile file,
             @PathVariable(value = "id") long id,
             @RequestParam String nickname,
             @RequestParam String shortInformation,

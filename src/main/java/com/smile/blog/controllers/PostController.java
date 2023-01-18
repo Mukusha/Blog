@@ -76,6 +76,11 @@ public class PostController {
         }
 
         if (action!=null && action.equals("addNewTag")) {
+            if (nameTag.equals("")) {
+                model.addAttribute("isAddNewTag",false);
+                System.out.println("введите название нового тега!");
+                return "postEdit";
+            }
             tagService.addTag(nameTag,shortDescription);
             postService.blogPostUpdate(subjectPost,   anonsPost,   fullTextPost,nameTag);
             model.addAttribute("isAddNewTag",false);
@@ -133,6 +138,11 @@ public class PostController {
        }
 
         if (action!=null && action.equals("addNewTag")) {
+            if (nameTag=="") {
+                model.addAttribute("isAddNewTag",false);
+                System.out.println("введите название нового тега!");
+                return "postAdd";
+            }
             tagService.addTag(nameTag,shortDescription);
             postService.blogPostUpdate(subjectPost,   anonsPost,   fullTextPost,nameTag);
             model.addAttribute("isAddNewTag",false);
