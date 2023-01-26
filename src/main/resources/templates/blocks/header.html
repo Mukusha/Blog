@@ -1,18 +1,60 @@
 <div th:fragment="header">
 
-  <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
-    <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-      <span class="fs-4">Blog</ya-tr-span></span>
-    </a>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary ">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/blog">
+        <img src="https://cdn-icons-png.flaticon.com/512/91/91647.png?w=740&t=st=1674052414~exp=1674053014~hmac=7e6a97cc104b3f55286b361ec5ccec34c447100b022a1b871774781e7549cbe7"  width="50" height="35">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span>меню</span>
+      </button>
+      <div  class="collapse navbar-collapse " id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-5 mb-lg-0" >
+          <li class="nav-item">
+            <a class="nav-link disabled" th:text="${#httpServletRequest.remoteUser}"> </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/blog">Главная</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/blog/addPost">Добавить пост</a>
+          </li>
 
-    <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-      <a class="me-3 py-2 text-dark text-decoration-none" th:href="'/profile/'+${#httpServletRequest.remoteUser}"> Профиль </ya-tr-span></a>
-      <a class="me-3 py-2 text-dark text-decoration-none" href="/blog">Главная</ya-tr-span></a>
-      <a class="me-3 py-2 text-dark text-decoration-none" href="/blog/addPost"> Добавить пост</ya-tr-span></a>
 
-      <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Выйти"/>
-      </form>
-    </nav>
-  </div>
+          <div sec:authorize="hasRole('ADMIN')">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Профиль
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" th:href="'/profile/'+${#httpServletRequest.remoteUser}">Профиль</a></li>
+                <li><a class="dropdown-item" href="#">- Настройки</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/admin/users" >Проверка пользователей</a></li>
+                <li><a class="dropdown-item" href="/admin/roles">Назначение ролей</a></li>
+                <li><a class="dropdown-item" href="#">- Редактирование тегов</a></li>
+                <li><a class="dropdown-item" href="#">- История посещения</a></li>
+              </ul>
+            </li>
+          </div>
+
+          <div sec:authorize="!hasRole('ADMIN')">
+            <li class="nav-item">
+              <a class="nav-link" th:href="'/profile/'+${#httpServletRequest.remoteUser}">Профиль</a>
+            </li>
+          </div>
+
+          <li class="nav-item">
+            <form th:action="@{/logout}" method="post">
+              <input type="submit" class="btn btn-outline-success me-2" value="Выйти"/>
+            </form>
+
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+  </nav>
 </div>
+

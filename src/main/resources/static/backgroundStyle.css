@@ -1,0 +1,21 @@
+body {
+    background-size: 170%;
+    background-position: center;
+    background-color: #c0c0c0;
+    background-image: url(https://img.freepik.com/free-vector/leaves-background-with-metallic-foil_79603-956.jpg?w=740&t=st=1671469116~exp=1671469716~hmac=026d07cde98c11a65362f8795d63229017613c4ed924c4404bf7c05d765fa9ca);
+
+    font-size: 14px;
+   }
+
+html {
+    font-size: 14px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.navbar-nav {
+    align-items: center;
+}
+
+.navbar-collapse {
+    flex-grow: 0;
+}

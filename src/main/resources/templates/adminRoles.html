@@ -1,28 +1,10 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
-  <style>
-        table {
-            margin-bottom: 20px;
-            border: 1px solid #dddddd;
-            border-collapse: collapse;
-        }
-
-        th {
-            font-weight: bold;
-            padding: 5px;
-            background: #efefef;
-            border: 1px solid #dddddd;
-        }
-
-        td {
-            border: 1px solid #dddddd;
-            padding: 5px;
-        }
-    </style>
   <title>"Назначение ролей"</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/adminPage.css">
 </head>
 
 <body>
@@ -43,7 +25,7 @@
 
     <tr th:each="user, iterStat  : ${allUsers}">
       <form th:action="'/admin/roles/'+${user.id}+'/save'" method="post">
-      <td th:text="${user.author.nickname}"></td>
+      <td th:title = "${user.author.shortInformation}"  th:text="${user.author.nickname}"></td>
           <td th:each="role : ${roles}" >
             <div>
               <input type="checkbox" th:name="${role}" th:checked="${#lists.contains(user.roles, role)}" th:disabled = "${noDisablet.get(iterStat.index)}" style="text-align:center">
@@ -76,7 +58,7 @@
 
   </table>
 
-  <a href="/profileXZ">Профиль</a>
+  <a th:href="'/profile/'+${#httpServletRequest.remoteUser}">Профиль</a>
   <a href="/blog">Главная</a>
 </div>
 </body>

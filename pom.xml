@@ -54,6 +54,11 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 		</dependency>
+		<!-- Должно помочь с оформлением страниц по ролям -->
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		</dependency>
 		<!-- Временный! пока идет разработка выключаем кеширование -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
