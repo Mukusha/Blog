@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 
@@ -18,17 +19,18 @@ import java.util.*;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AuthorService authorService;
+    private final MailService mailSender;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, AuthorService authorService) {
+    public UserServiceImpl(UserRepository userRepository, AuthorService authorService, MailService mailSender) {
         this.userRepository = userRepository;
         this.authorService = authorService;
+        this.mailSender = mailSender;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user = userRepository.findByUsername(username);
-        return user;
+        return userRepository.findByUsername(username);
     }
 
     @Override
@@ -39,10 +41,27 @@ public class UserServiceImpl implements UserService {
         }
         user.setRoles(Collections.singleton(Role.USER));
         user.setActive(true);
+
         Author author = authorService.profileAdd(user.getUsername());
         user.setAuthor(author);
         userRepository.save(user);
     }
+
+    public void addEmail(User user, String email){
+        user.setEmail(email);
+        user.setActivationCode(UUID.randomUUID().toString()); //не активированная учетная запись
+        userRepository.save(user);
+        if (!StringUtils.isEmpty(user.getEmail())) {
+            String message = String.format(
+                    "Привет, %s! \n" +
+                            "Доброе пожаловать в Blog. Пожалуйста, перейдите по следующей ссылке: http://localhost:8080/activate/%s",
+                    user.getUsername(),
+                    user.getActivationCode()
+            );
+            mailSender.send(user.getEmail(), "Код активации", message);
+        }
+    }
+
 
     @Override
     public Long findAuthorIdByUsername(String name) {
@@ -66,14 +85,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByAuthorId(id).getRoles();
     }
 
-  /*  public Map<Long, Set<Role>> allUsersAndRole(){
-        Map<Long, Set<Role>> allUsers= new LinkedHashMap<Long, Set<Role>>();
-        for (User user: userRepository.findAll()) {
-            allUsers.put(user.getId(),user.getRoles());
-        }
-        return allUsers;
-    }*/
-
     public List<Boolean> getDisabletList(long index){
         List<Boolean> disabletUserList= new ArrayList<>();
         Iterable<User> listUser = userRepository.findAll();
@@ -85,7 +96,7 @@ public class UserServiceImpl implements UserService {
         return disabletUserList;
     }
 
-    public void editRoleUser(Long userId, Boolean admin, Boolean user) throws Exception {
+    public void editRoleUser(Long userId, Boolean admin, Boolean user) {
         if(!userRepository.existsById(userId)){
            // throw new Exception("user does not exist");
             System.out.println("Пользователя не существует!!!");
@@ -101,6 +112,25 @@ public class UserServiceImpl implements UserService {
         User userNew = users.get();
         userNew.setRoles(roles);
         userRepository.save(userNew);
+    }
+
+    public boolean activateUser(String code) {
+        User user = userRepository.findByActivationCode(code);
+
+        if (user == null) {
+            return false;
+        }
+
+        user.setActivationCode(null); // помечаем, что аккаунт активирован
+        userRepository.save(user);
+
+        return true;
+    }
+
+    public String findEmailByAuthorId(Long id){
+        User user = userRepository.findByAuthorId(id);
+        if (user.getEmail() == null) return "нет привязанной почты";
+        return user.getEmail();
     }
 }
 

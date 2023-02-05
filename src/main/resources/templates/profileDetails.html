@@ -43,9 +43,20 @@
                         </div>
                     </div>
                 </div>
+                <div th:if="${my}">
+                    <form th:action="@{/blog/link_mail}" method="post">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <details>
+                    <summary>Привязать email</summary>
+                    <input type="email" name="email" placeholder="some@some.com" class=" form-control">
+                    <button  class="btn btn-warning">Привязать почту</button>
+                </details>
+                    </form>
+                </br>
                 <a th:if="${isAdmin}" href="/admin/users">Проверка пользователей</ya-tr-span></a>
                 </br>
                 <a th:if="${isAdmin}" href="/admin/roles">Настройка прав пользователей</ya-tr-span></a>
+            </div>
             </div>
             <div class="col-lg-8 col-md-8 col-xs-12">
                 <div class="panel">
@@ -56,6 +67,7 @@
                             <table class="table table-th-block">
                                 <tbody>
                                 <tr><td class="active">Полных лет:</td><td> <p th:if="${age} != 0" th:text="${age}"></p></td></tr>
+                                <tr><td class="active">email:</td><td><p th:text="${email}"></p></td></tr>
                                 <tr><td class="active">Зарегистрирован:</td><td><p th:text="${author.dateCreate}"></p></td></tr>
                                 </tbody>
                             </table>

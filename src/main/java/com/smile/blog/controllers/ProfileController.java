@@ -39,6 +39,7 @@ public class ProfileController {
         model.addAttribute("author", author);
         model.addAttribute("age", author.getAge());
         model.addAttribute("posts", postService.getAllPostAuthor(author));
+        model.addAttribute("email", userService.findEmailByAuthorId(id));
         //своя ли страница не своя не даем перейти на страницу редактирования
         if(user.getAuthor().getId() == id) {
             model.addAttribute("my", true);
@@ -59,6 +60,8 @@ public class ProfileController {
         model.addAttribute("posts", postService.getAllPostAuthor(author));
         model.addAttribute("posts", postService.getAllPostAuthor(author));
         model.addAttribute("my", true);
+        model.addAttribute("email", userService.findEmailByAuthorId(author.getId()));
+
         if(user.getRoles().contains(Role.ADMIN)) { model.addAttribute("isAdmin", true);
             model.addAttribute("isPageAdmin", true);
         }
@@ -94,5 +97,34 @@ public class ProfileController {
         authorService.AuthorSaveUpdate(id, nickname,   shortInformation, dateOfBirth, file);
         model.addAttribute("author", authorService.findAuthorById(id));
         return "redirect:/blog/profile/"+id; //возвращаемся на страницу отредактированного профиля
+    }
+
+    @PostMapping("/blog/link_mail")
+    public String addEmeil(
+            @AuthenticationPrincipal User user,
+            @RequestParam String email, Model model)
+    {
+        try
+        {
+            userService.addEmail(user, email);
+            return "redirect:/blog/profile/"+user.getAuthor().getId();
+        }
+        catch (Exception ex)
+        {
+            return "redirect:/blog/profile/"+user.getAuthor().getId();
+        }
+    }
+
+    @GetMapping("/activate/{code}")
+    public String activate(Model model, @PathVariable String code) {
+        boolean isActivated = userService.activateUser(code);
+
+        if (isActivated) {
+            model.addAttribute("message", "User успешно активирован");
+        } else {
+            model.addAttribute("message", "Код активации не найден!");
+        }
+
+        return "login";
     }
 }
