@@ -32,4 +32,18 @@ public interface UserService extends UserDetailsService {
     List<Boolean> getDisabletList(long index);
 
     void editRoleUser(Long userId, Boolean admin, Boolean user) throws Exception;
+
+    /**
+     * Активация аккаунта при помощи почты
+     * */
+    boolean activateUser(String code);
+
+    /**
+     * Отправить сообщение пользователю
+     * * */
+   void addEmail(User user, String email);
+
+    String findEmailByAuthorId(Long id);
+
+    boolean isAccountActivatedByAuthorId(Long id);
 }

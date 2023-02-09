@@ -59,6 +59,11 @@
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
 		</dependency>
+		<!-- Spring Boot. Быстрый старт: Mail, подтверждение ящика -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 		<!-- Временный! пока идет разработка выключаем кеширование -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
