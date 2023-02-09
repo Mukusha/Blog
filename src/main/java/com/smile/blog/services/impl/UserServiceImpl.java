@@ -9,6 +9,7 @@ import com.smile.blog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -20,12 +21,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AuthorService authorService;
     private final MailService mailSender;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, AuthorService authorService, MailService mailSender) {
+    public UserServiceImpl(UserRepository userRepository, AuthorService authorService, MailService mailSender, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.authorService = authorService;
         this.mailSender = mailSender;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -44,6 +47,7 @@ public class UserServiceImpl implements UserService {
 
         Author author = authorService.profileAdd(user.getUsername());
         user.setAuthor(author);
+        user.setPassword(passwordEncoder.encode(user.getPassword())); //шифрование пароля
         userRepository.save(user);
     }
 
