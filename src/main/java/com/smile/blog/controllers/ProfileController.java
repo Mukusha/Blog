@@ -40,6 +40,8 @@ public class ProfileController {
         model.addAttribute("age", author.getAge());
         model.addAttribute("posts", postService.getAllPostAuthor(author));
         model.addAttribute("email", userService.findEmailByAuthorId(id));
+        model.addAttribute("act", userService.isAccountActivatedByAuthorId(id));
+
         //своя ли страница не своя не даем перейти на страницу редактирования
         if(user.getAuthor().getId() == id) {
             model.addAttribute("my", true);
@@ -61,6 +63,7 @@ public class ProfileController {
         model.addAttribute("posts", postService.getAllPostAuthor(author));
         model.addAttribute("my", true);
         model.addAttribute("email", userService.findEmailByAuthorId(author.getId()));
+        model.addAttribute("act", userService.isAccountActivatedByAuthorId(author.getId()));
 
         if(user.getRoles().contains(Role.ADMIN)) { model.addAttribute("isAdmin", true);
             model.addAttribute("isPageAdmin", true);
@@ -102,7 +105,7 @@ public class ProfileController {
     @PostMapping("/blog/link_mail")
     public String addEmeil(
             @AuthenticationPrincipal User user,
-            @RequestParam String email, Model model)
+            @RequestParam String email)
     {
         try
         {

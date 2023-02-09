@@ -132,5 +132,11 @@ public class UserServiceImpl implements UserService {
         if (user.getEmail() == null) return "нет привязанной почты";
         return user.getEmail();
     }
+
+    public boolean isAccountActivatedByAuthorId(Long id){
+        User user = userRepository.findByAuthorId(id);
+        if (user.getEmail() != null & user.getActivationCode()==null) return true;
+        return false;
+    }
 }
 

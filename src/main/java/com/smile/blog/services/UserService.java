@@ -44,4 +44,6 @@ public interface UserService extends UserDetailsService {
    void addEmail(User user, String email);
 
     String findEmailByAuthorId(Long id);
+
+    boolean isAccountActivatedByAuthorId(Long id);
 }
